@@ -73,6 +73,6 @@ jobs:
         with:
           path: .venv
           key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
-      - run: pelican content
+      - run: ./venv/bin/python -m pelican content
       - run: gsutil rsync -R output gs://carrick.eu
       - run: gsutil iam ch allUsers:objectViewer gs://carrick.eu
