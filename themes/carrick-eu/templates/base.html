@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="{% block html_lang %}{{ DEFAULT_LANG }}{% endblock html_lang %}">
+  {% block head %}
+    <meta charset="utf-8">
+    <title>{% block title %}{{ SITENAME }}: {{ HTML_TITLE_SUBTITLE }}{% endblock title %}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="{{ SITEURL }}/theme/images/logo.svg" rel="icon"type="image/svg+xml">
+    {% assets filters="cleancss", output="css/main.min.css", "css/main.css" %}
+      <link href="{{ SITEURL }}/{{ ASSET_URL }}" rel="stylesheet">
+    {% endassets %}
+    <meta name="author" content="Tom Carrick">
+    <meta name="generator" content="Pelican">
+    {% if FEED_ALL_ATOM %}
+      <link
+        href="{{ FEED_DOMAIN }}/{% if FEED_ALL_ATOM_URL %}{{ FEED_ALL_ATOM_URL }}{% else %}{{ FEED_ALL_ATOM }}{% endif %}"
+        type="application/atom+xml"
+        rel="alternate"
+        title="{{ SITENAME }} Full Atom Feed"
+      >
+    {% endif %}
+    {% if FEED_ALL_RSS %}
+      <link
+        href="{{ FEED_DOMAIN }}/{% if FEED_ALL_RSS_URL %}{{ FEED_ALL_RSS_URL }}{% else %}{{ FEED_ALL_RSS }}{% endif %}"
+        type="application/rss+xml"
+        rel="alternate"
+        title="{{ SITENAME }} Full RSS Feed"
+      >
+    {% endif %}
+    {% if FEED_ATOM %}
+      <link
+        href="{{ FEED_DOMAIN }}/{%if FEED_ATOM_URL %}{{ FEED_ATOM_URL }}{% else %}{{ FEED_ATOM }}{% endif %}"
+        type="application/atom+xml"
+        rel="alternate"
+        title="{{ SITENAME }} Atom Feed"
+      >
+    {% endif %}
+    {% if FEED_RSS %}
+      <link
+        href="{{ FEED_DOMAIN }}/{% if FEED_RSS_URL %}{{ FEED_RSS_URL }}{% else %}{{ FEED_RSS }}{% endif %}"
+        type="application/rss+xml"
+        rel="alternate"
+        title="{{ SITENAME }} RSS Feed">
+    {% endif %}
+    {% if CATEGORY_FEED_ATOM and category %}
+      <link
+        href="{{ FEED_DOMAIN }}/{% if CATEGORY_FEED_ATOM_URL %}{{ CATEGORY_FEED_ATOM_URL.format(slug=category.slug) }}{% else %}{{ CATEGORY_FEED_ATOM.format(slug=category.slug) }}{% endif %}"
+        type="application/atom+xml"
+        rel="alternate"
+        title="{{ SITENAME }} Categories Atom Feed"
+      >
+    {% endif %}
+    {% if CATEGORY_FEED_RSS and category %}
+      <link
+        href="{{ FEED_DOMAIN }}/{% if CATEGORY_FEED_RSS_URL %}{{ CATEGORY_FEED_RSS_URL.format(slug=category.slug) }}{% else %}{{ CATEGORY_FEED_RSS.format(slug=category.slug) }}{% endif %}"
+        type="application/rss+xml"
+        rel="alternate"
+        title="{{ SITENAME }} Categories RSS Feed"
+      >
+    {% endif %}
+    {% if TAG_FEED_ATOM and tag %}
+      <link
+        href="{{ FEED_DOMAIN }}/{% if TAG_FEED_ATOM_URL %}{{ TAG_FEED_ATOM_URL.format(slug=tag.slug) }}{% else %}{{ TAG_FEED_ATOM.format(slug=tag.slug) }}{% endif %}"
+        type="application/atom+xml"
+        rel="alternate"
+        title="{{ SITENAME }} Tags Atom Feed"
+      >
+    {% endif %}
+    {% if TAG_FEED_RSS and tag %}
+      <link
+        href="{{ FEED_DOMAIN }}/{% if TAG_FEED_RSS_URL %}{{ TAG_FEED_RSS_URL.format(slug=tag.slug) }}{% else %}{{ TAG_FEED_RSS.format(slug=tag.slug) }}{% endif %}"
+        type="application/rss+xml"
+        rel="alternate"
+        title="{{ SITENAME }} Tags RSS Feed">
+    {% endif %}
+    <meta property="og:site_name" content="Tom Carrick">
+    <meta property="og:locale" content="en_GB">
+
+    {% block social_image %}
+      <meta property="og:image" content="{{ SITEURL }}/theme/images/logo.png">
+      <meta property="og:image:alt" content="Tom Carrick">
+      <meta property="og:image:width" content="300">
+      <meta property="og:image:height" content="300">
+      <meta name="twitter:image" content="{{ SITEURL }}/theme/images/logo.png">
+      <meta name="twitter:image:alt" content="Tom Carrick">
+    {% endblock %}
+    {% block og_type %}
+      <meta property="og:type" content="website">
+    {% endblock %}
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:creator" content="@knyghty">
+    <meta name="twitter:site" content="@knyghty">
+  {% endblock head %}
+
+  <header class="site-header">
+    <nav>
+      <a href="{{ SITEURL }}/" class="home-link"{% if page and page.url == "" %} aria-current="page"{% endif %}>
+        <svg
+          viewBox="0 0 90 90"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#9b59d0"
+          class="logo"
+          role="presentation"
+        >
+          <g class="t">
+            <rect width="74" height="16"></rect>
+            <rect x="31" height="90" width="16"></rect>
+          </g>
+          <g class="c">
+            <rect x="31" height="16" width="55"></rect>
+            <rect x="31" height="90" width="16"></rect>
+            <rect x="31" y="74" height="16" width="55"></rect>
+          </g>
+        </svg>
+        Home
+      </a>
+      {% for title, link in MENUITEMS %}
+        <a href="{{ link }}">{{ title }}</a>
+      {% endfor %}
+      {% if DISPLAY_PAGES_ON_MENU %}
+        {% for p in pages %}
+          <a href="{{ SITEURL }}/{{ p.url }}"{% if p == page %} aria-current="page"{% endif %}>{{ p.title }}</a>
+        {% endfor %}
+      {% endif %}
+    </nav>
+  </header>
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+  <footer class="site-footer">
+    © Tom Carrick
+    <ul class="inline unstyled">
+      <li><a href="https://github.com/knyghty">GitHub</a></li>
+      <li><a href="https://twitter.com/knyghty">Twitter</a></li>
+    </ul>
+  </footer>
+</html>

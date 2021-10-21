@@ -1,0 +1,19 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v3.2.0
+    hooks:
+      - id: check-added-large-files
+      - id: check-toml
+      - id: check-yaml
+      - id: debug-statements
+      - id: end-of-file-fixer
+      - id: trailing-whitespace
+  - repo: https://github.com/psf/black
+    rev: 21.9b0
+    hooks:
+      - id: black
+  - repo: https://github.com/asottile/blacken-docs
+    rev: v1.11.0
+    hooks:
+      - id: blacken-docs
+        additional_dependencies: [black==21.9b0]

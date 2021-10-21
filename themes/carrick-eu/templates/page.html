@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+
+{% block html_lang %}{{ page.lang }}{% endblock %}
+
+{% block title %}{{ page.title|striptags }} | {{ SITENAME }}{% endblock %}
+
+{% block head %}
+  {{ super() }}
+
+  <link href="{{ SITEURL }}/{{ page.url }}" rel="canonical">
+
+  <meta property="og:url" content="{{ SITEURL }}/{{ page.url }}">
+
+  {% if page.description %}
+    <meta name="description" property="og:description" content="{{ page.description }}">
+    <meta name="twitter.description" content="{{ page.description }}">
+  {% endif %}
+
+  {% import 'translations.html' as translations with context %}
+  {% if translations.entry_hreflang(page) %}
+    {{ translations.entry_hreflang(page) }}
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  <section class="content-area">
+    <header class="content-header">
+      <h1>{{ page.title }}</h1>
+      {{ page.subtitle }}
+      {% import 'translations.html' as translations with context %}
+      {{ translations.translations_for(page) }}
+    </header>
+
+    <div class="content">
+      {{ page.content }}
+    </div>
+
+    {% if page.modified %}
+      <footer class="content-footer">
+        Last updated: <time datetime="{{ page.modified.isoformat() }}">{{ page.locale_modified }}</time>
+      </footer>
+    {% endif %}
+  </section>
+{% endblock %}

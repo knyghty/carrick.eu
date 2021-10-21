@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "plugins"
+version = "1.0.0"
+description = "Local pelican plugins"
+authors = ["Tom Carrick <tom@carrick.eu>"]
+license = "MIT"
+packages = [
+    { include = "pelican" },
+]
+
+[tool.poetry.dependencies]
+python = ">=3.6.2,<4.0"
+htmlmin = "^0.1.12"
+pelican = ">=4.5"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"

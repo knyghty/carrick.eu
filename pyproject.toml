@@ -1,0 +1,28 @@
+[tool.isort]
+profile = 'black'
+
+[tool.poetry]
+name = "carrick.eu"
+version = "0.1.0"
+description = ""
+authors = ["Tom Carrick <tom@carrick.eu>"]
+license = "MIT"
+
+[tool.poetry.dependencies]
+python = "^3.9"
+pelican = "^4.7.1"
+pelican-sitemap = "^1.0.2"
+pelican-webassets = "^2.0.0"
+cssutils = "^2.3.0"
+plugins = {path = "plugins"}
+
+[tool.poetry.dev-dependencies]
+black = "^21.9b0"
+blacken-docs = "^1.11.0"
+pre-commit = "^2.15.0"
+rstcheck = "^3.3.1"
+isort = "^5.9.3"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
