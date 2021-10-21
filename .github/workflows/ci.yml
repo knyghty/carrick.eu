@@ -61,8 +61,8 @@ jobs:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs: [black, isort]
     steps:
-      - run: sudo apt-get install -y cleancss
       - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
       - uses: google-github-actions/setup-gcloud@master
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
@@ -74,6 +74,7 @@ jobs:
         with:
           path: .venv
           key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
+      - run: npm install -g clean-css-cli
       - run: .venv/bin/python -m pelican content
       - run: gsutil rsync -R output gs://carrick.eu
       - run: gsutil iam ch allUsers:objectViewer gs://carrick.eu
