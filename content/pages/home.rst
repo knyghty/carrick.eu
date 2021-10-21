@@ -8,7 +8,7 @@ Tom Carrick
 :subtitle: Web development consultant. Python, Django.
 :url:
 
-Hello there 👋🏻!
+Hello there 👋🏻
 
 I'm Tom Carrick, professional web developer. I work mostly with Python,
 Django, PostgreSQL, and sometimes FastAPI. I'm currently rekindling my JS skills.
