@@ -61,6 +61,7 @@ jobs:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs: [black, isort]
     steps:
+      - run: sudo apt-get install -y cleancss
       - uses: actions/checkout@v2
       - uses: google-github-actions/setup-gcloud@master
         with:
