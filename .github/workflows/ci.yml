@@ -54,7 +54,7 @@ jobs:
         with:
           path: .venv
           key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
-      - run: .venv/bin/python -m isort --check-only --diff src
+      - run: .venv/bin/python -m isort --check-only --diff .
 
   deploy:
     runs-on: ubuntu-latest
