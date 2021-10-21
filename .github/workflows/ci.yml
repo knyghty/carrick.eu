@@ -58,10 +58,10 @@ jobs:
 
   deploy:
     runs-on: ubuntu-latest
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
     needs: [black, isort]
     steps:
       - uses: actions/checkout@v2
-      - if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/master' }}
       - uses: google-github-actions/setup-gcloud@master
         with:
           project_id: ${{ secrets.GCP_PROJECT_ID }}
