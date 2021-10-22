@@ -78,4 +78,3 @@ jobs:
       - run: .venv/bin/python -m pelican content -s publishconf.py
       - run: rm -r output/theme/.webassets-cache
       - run: gsutil rsync -R output gs://carrick.eu
-      - run: gsutil iam ch allUsers:objectViewer gs://carrick.eu
