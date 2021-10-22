@@ -133,13 +133,9 @@ def livereload(c):
 def publish(c):
     """Publish to production via rsync"""
     pelican_run("-s {settings_publish}".format(**CONFIG))
-    c.run(
-        'rsync --delete --exclude ".DS_Store" -pthrvz -c '
-        '-e "ssh -p {ssh_port}" '
-        "{} {ssh_user}@{ssh_host}:{ssh_path}".format(
-            CONFIG["deploy_path"].rstrip("/") + "/", **CONFIG
-        )
-    )
+    c.run(f"rm -r {CONFIG['deploy_path']}/theme/.webassets-cache")
+    c.run(f"gsutil rsync -R {CONFIG['deploy_path']} gs://carrick.eu")
+    c.run("gsutil iam ch allUsers:objectViewer gs://carrick.eu")
 
 
 def pelican_run(cmd):
