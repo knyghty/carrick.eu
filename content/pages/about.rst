@@ -10,7 +10,7 @@ so I can eeasily extend it if I need to.
 
 I wrote the theme myself. It's designed to be minimalist, have semantic markup,
 clean, modern CSS and use only system fonts. All these help keep the page size to a
-minimum. There is currently no JS and there are no cookies, and no plans to add either.
+minimum. There are currently no cookies, and no plans to add any.
 This is not for any ideoligcal reason — I just don't need them.
 
 The design has incorporated accessibility from the start. It should pass `WCAG 2.1`_ AA.

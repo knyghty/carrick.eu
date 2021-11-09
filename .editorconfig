@@ -9,7 +9,7 @@ indent_size = 4
 [*.py]
 charset = utf-8
 
-[*.{html,svg,yaml,yml}]
+[*.{html,js,svg,yaml,yml}]
 indent_size = 2
 
 [Makefile]
