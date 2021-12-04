@@ -13,7 +13,7 @@ DEFAULT_DATE_FORMAT = r"%-d %B %-Y"
 DEFAULT_LANG = "en-GB"
 
 ARTICLE_SAVE_AS = "blog/{slug}/index.html"
-ARTICLE_URL = "blog/{slug}"
+ARTICLE_URL = "blog/{slug}/"
 INDEX_SAVE_AS = "blog/index.html"
 PAGE_SAVE_AS = "{slug}/index.html"
 PAGE_URL = "{slug}/"
