@@ -4,18 +4,18 @@ verify_ssl = true
 name = "pypi"
 
 [packages]
+black = "*"
+blacken-docs = "*"
+cssutils = "*"
+isort = "*"
 pelican = "*"
 pelican-sitemap = "*"
 pelican-webassets = "*"
-cssutils = "*"
 plugins = {path = "plugins"}
 
 [dev-packages]
-black = "*"
-blacken-docs = "*"
 pre-commit = "*"
 rstcheck = "*"
-isort = "*"
 
 [requires]
 python_version = "3.10"
