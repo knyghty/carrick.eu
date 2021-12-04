@@ -40,7 +40,7 @@ jobs:
       - name: Install Pipenv
         run: pip install pipenv
       - name: Run isort
-        run: pipenv run isort --check-only --diff .
+        run: pipenv run python -m isort --check-only --diff .
 
   deploy:
     runs-on: ubuntu-latest
