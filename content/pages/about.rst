@@ -18,10 +18,9 @@ Getting it AAA compliant would be a lot more work for almost no benefit, so it'l
 happen if I have some free time and nothing else to do. However, that doesn't mean I
 won't improve the accessibility generally.
 
-The site is hosted on `Google Cloud`_ Storage, which is very cheap and has a very low
-carbon footrpint. If there's some way I can host a static site that is a better mix
-of cheap and green, do let me know.
+The site is hosted on `GitHub Pages`_ for the sake of simplicity and not having
+to needlessly throw money away.
 
-.. _Google Cloud: https://cloud.google.com/
+.. _GitHub Pages: https://pages.github.com/
 .. _Pelican: https://getpelican.com/
 .. _WCAG 2.1: https://www.w3.org/TR/WCAG21/

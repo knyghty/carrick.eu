@@ -1,0 +1,21 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+pelican = "*"
+pelican-sitemap = "*"
+pelican-webassets = "*"
+cssutils = "*"
+plugins = {path = "plugins"}
+
+[dev-packages]
+black = "*"
+blacken-docs = "*"
+pre-commit = "*"
+rstcheck = "*"
+isort = "*"
+
+[requires]
+python_version = "3.10"

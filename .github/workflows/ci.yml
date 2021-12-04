@@ -9,32 +9,17 @@ on:
 
 jobs:
   dependencies:
-    # Build dependencies once if the lockfile has changed.
-    # The created virtual environment is used in subsequent runs.
-    # If the lockfile hasn't changed, we re-use the virtual environment from the cache.
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Load cached venv
-        id: cached-poetry-dependencies
-        uses: actions/cache@v2
-        with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
       - uses: actions/setup-python@v2
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
         with:
-          python-version: "3.9"
-      - name: Install Poetry
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        uses: snok/install-poetry@v1
-        with:
-          virtualenvs-create: true
-          virtualenvs-in-project: true
-          installer-parallel: true
+          cache: pipenv
+          python-version: "3.10"
+      - name: Install Pipenv
+        run: pip install pipenv
       - name: Install dependencies
-        if: steps.cached-poetry-dependencies.outputs.cache-hit != 'true'
-        run: poetry install --no-interaction --no-root
+        run: pipenv install
 
   black:
     runs-on: ubuntu-latest
@@ -48,13 +33,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Load cached virtual environment
-        id: cached-poetry-dependencies
-        uses: actions/cache@v2
+      - uses: actions/setup-python@v2
         with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
-      - run: .venv/bin/python -m isort --check-only --diff .
+          cache: pipenv
+          python-version: "3.10"
+      - name: Install Pipenv
+        run: pip install pipenv
+      - name: Run isort
+        run: pipenv run isort --check-only --diff .
 
   deploy:
     runs-on: ubuntu-latest
@@ -63,18 +49,19 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
-      - uses: google-github-actions/setup-gcloud@master
+      - uses: actions/setup-python@v2
         with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          export_default_credentials: true
-      - name: Load cached virtual environment
-        id: cached-poetry-dependencies
-        uses: actions/cache@v2
+          cache: pipenv
+          python-version: "3.10"
+      - name: Install Pipenv
+        run: pip install pipenv
+      - name: Install clean-css
+        run: npm install -g clean-css-cli
+      - name: Build site
+        run: pipenv run pelican content -s publishconf.py
+      - name: Clean up
+        run: rm -r output/theme/.webassets-cache
+      - uses: JamesIves/github-pages-deploy-action@4.1.7
         with:
-          path: .venv
-          key: venv-${{ runner.os }}-${{ hashFiles('**/poetry.lock') }}
-      - run: npm install -g clean-css-cli
-      - run: .venv/bin/python -m pelican content -s publishconf.py
-      - run: rm -r output/theme/.webassets-cache
-      - run: gsutil rsync -R output gs://carrick.eu
+          branch: gh-pages
+          folder: output
