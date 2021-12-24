@@ -6,44 +6,38 @@
 {% endblock %}
 
 {% block content %}
-  <section id="content">
+  <section class="content-area">
     <header class="content-header">
       {% block content_title %}
         <h1>All articles</h1>
       {% endblock %}
     </header>
-
-    <ol class="article-list">
-      {% for article in articles_page.object_list %}
-        <li>
-          <article>
-            <header>
-              <h1>
-                <a
-                  href="{{ SITEURL }}/{{ article.url }}"
-                  rel="bookmark"
-                  title="Permalink to {{ article.title|striptags }}"
-                >
-                  {{ article.title }}
-                </a>
-              </h1>
-              Published: <time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }} </time>
-              {% if article.modified %}
-                | Updated: <time datetime="{{ article.modified.isoformat() }}">{{ article.locale_modified }}</time>
-              {% endif %}
-              {% if article.authors %}
-                <address class="vcard author">By
-                  {% for author in article.authors %}
-                    <a class="url fn" href="{{ SITEURL }}/{{ author.url }}">{{ author }}</a>
-                  {% endfor %}
-                </address>
-              {% endif %}
-            </header>
-            <div>{{ article.summary }}</div>
-          </article>
-        </li>
-      {% endfor %}
-    </ol>
+    <div class="content">
+      <ol class="article-list">
+        {% for article in articles_page.object_list %}
+          <li>
+            <article>
+              <header>
+                <h1>
+                  <a
+                    href="{{ SITEURL }}/{{ article.url }}"
+                    rel="bookmark"
+                    title="Permalink to {{ article.title|striptags }}"
+                  >
+                    {{ article.title }}
+                  </a>
+                </h1>
+                Published: <time datetime="{{ article.date.isoformat() }}">{{ article.locale_date }} </time>
+                {% if article.modified %}
+                  | Updated: <time datetime="{{ article.modified.isoformat() }}">{{ article.locale_modified }}</time>
+                {% endif %}
+              </header>
+              <div>{{ article.summary }}</div>
+            </article>
+          </li>
+        {% endfor %}
+      </ol>
+    </div>
     {% if articles_page.has_other_pages() %}
       {% include 'pagination.html' %}
     {% endif %}

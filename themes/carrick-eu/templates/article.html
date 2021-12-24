@@ -7,6 +7,12 @@
 {% block head %}
   {{ super() }}
 
+  {% if article.metadata.has_code == "true" %}
+    {% assets filters="cleancss", output="css/pygments-default.min.css", "css/pygments-default.css" %}
+      <link href="{{ SITEURL }}/{{ ASSET_URL }}" rel="stylesheet">
+    {% endassets %}
+  {% endif %}
+
   <link href="{{ SITEURL }}/{{ article.url }}" rel="canonical">
 
   {% import 'translations.html' as translations with context %}

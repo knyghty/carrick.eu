@@ -36,12 +36,6 @@ h1 {
 p {
     /* Works out as 1.5x the line-height, minimum for WCAG AAA. */
     margin: 1.5rem 0;
-
-    /*
-    For WCAG AAA, this isn't perfect for non-monospace fonts.
-    It probably doesn't even do anything.
-    */
-    max-width: 80ch;
 }
 
 ul.inline {
@@ -169,7 +163,7 @@ main {
         "content-header content-header content-header" min-content
         ". content ." auto
         "content-footer content-footer content-footer" min-content
-        / auto fit-content(35em) auto;
+        / auto fit-content(42em) auto;
 
     min-height: 100%;
 }
@@ -204,6 +198,11 @@ main {
 {
     content: " \01F310";
     font-size: .8rem;
+}
+
+.content a[href^="https://carrick.eu"]::after {
+    content: inherit;
+    font-size: inherit;
 }
 
 .content a[href^="mailto:"]::after {
@@ -266,4 +265,12 @@ main {
     .skill-list {
         grid-template-columns: repeat(4, 1fr);
     }
+}
+
+/* Articles */
+
+.highlight pre {
+    font-family: "SF Mono", "Menlo", "Monaco", "Consolas", "Courier New", monospace;
+    font-size: .8rem;
+    white-space: pre-wrap;
 }

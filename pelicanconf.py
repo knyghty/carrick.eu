@@ -12,6 +12,7 @@ TIMEZONE = "Europe/Amsterdam"
 DEFAULT_DATE_FORMAT = r"%-d %B %-Y"
 DEFAULT_LANG = "en-GB"
 
+ARTICLE_PATHS = ["articles"]
 ARTICLE_SAVE_AS = "blog/{slug}/index.html"
 ARTICLE_URL = "blog/{slug}/"
 INDEX_SAVE_AS = "blog/index.html"

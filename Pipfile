@@ -12,6 +12,7 @@ pelican = "*"
 pelican-sitemap = "*"
 pelican-webassets = "*"
 plugins = {path = "plugins"}
+pygments = "*"
 
 [dev-packages]
 pre-commit = "*"
