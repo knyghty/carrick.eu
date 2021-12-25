@@ -34,8 +34,10 @@ h1 {
 }
 
 p {
-    /* Works out as 1.5x the line-height, minimum for WCAG AAA. */
-    margin: 1.5rem 0;
+    /* WCAG wants 2x the font-size after each paragraph, so 1x on either side.
+     * I prefer a little more, though.
+    */
+    margin: 1.2em 0;
 }
 
 ul.inline {
@@ -61,8 +63,7 @@ li {
 }
 
 small {
-    /* 16px - the minimum size for any text. */
-    font-size: .8rem;
+    font-size: .75rem;
 }
 
 details {
@@ -82,8 +83,8 @@ html {
     color: #222;
 
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 18px;
-    line-height: 1.5; /* Minimum for WCAG AAA. */
+    font-size: 22px;
+    line-height: 1.5; /* Minimum for WCAG AA. */
 }
 
 body {
@@ -163,7 +164,7 @@ main {
         "content-header content-header content-header" min-content
         ". content ." auto
         "content-footer content-footer content-footer" min-content
-        / auto fit-content(42em) auto;
+        / auto fit-content(32em) auto;
 
     min-height: 100%;
 }
@@ -191,6 +192,8 @@ main {
 .content {
     grid-area: content;
     margin: 0 1em 2em 1em;
+    /* Stops code blocks ballooning. */
+    max-width: 30em;
 }
 
 .content a[href^="https://"]::after,
@@ -213,7 +216,7 @@ main {
 .content-footer {
     grid-area: content-footer;
 
-    background: #ddd;
+    background: #e4e4e4;
     border-top: 1px solid #666;
 
     padding: .8em;
@@ -224,6 +227,7 @@ main {
 .site-footer {
     grid-area: site-footer;
 
+    font-size: .75rem;
     padding: .8em;
 
     background: #000;
@@ -271,6 +275,7 @@ main {
 
 .highlight pre {
     font-family: "SF Mono", "Menlo", "Monaco", "Consolas", "Courier New", monospace;
-    font-size: .8rem;
-    white-space: pre-wrap;
+    font-size: .75rem;
+    overflow-x: scroll;
+    padding: 1.5em 1em;
 }
