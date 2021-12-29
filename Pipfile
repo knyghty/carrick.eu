@@ -6,7 +6,6 @@ name = "pypi"
 [packages]
 black = "*"
 blacken-docs = "*"
-cssutils = "*"
 isort = "*"
 pelican = "*"
 pelican-sitemap = "*"
