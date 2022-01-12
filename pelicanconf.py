@@ -20,6 +20,8 @@ ARTICLE_URL = "blog/{slug}/"
 INDEX_SAVE_AS = "blog/index.html"
 PAGE_SAVE_AS = "{slug}/index.html"
 PAGE_URL = "{slug}/"
+TAG_SAVE_AS = "blog/tags/{slug}/index.html"
+TAG_URL = "blog/tags/{slug}/"
 
 PAGE_ORDER_BY = "order"
 
