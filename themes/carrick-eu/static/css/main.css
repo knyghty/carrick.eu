@@ -33,6 +33,16 @@ h1 {
     font-size: 1.25em;
 }
 
+h2 {
+    font-size: 1.125em;
+    margin: 1.5em 0 1em 0;
+}
+
+h3 {
+    font-size: 1em;
+    margin: 1.5em 0 1em 0;
+}
+
 p {
     /* WCAG wants 2x the font-size after each paragraph, so 1x on either side.
      * I prefer a little more, though.
@@ -83,7 +93,7 @@ html {
     color: #222;
 
     font-family: Arial, Helvetica, sans-serif;
-    font-size: 22px;
+    font-size: 1.25em;
     line-height: 1.5; /* Minimum for WCAG AA. */
 }
 
@@ -164,7 +174,7 @@ main {
         "content-header content-header content-header" min-content
         ". content ." auto
         "content-footer content-footer content-footer" min-content
-        / auto fit-content(32em) auto;
+        / auto fit-content(36em) auto;
 
     min-height: 100%;
 }
@@ -193,7 +203,7 @@ main {
     grid-area: content;
     margin: 0 1em 2em 1em;
     /* Stops code blocks ballooning. */
-    max-width: 30em;
+    max-width: 36em;
 }
 
 .content a[href^="https://"]::after,
@@ -278,4 +288,13 @@ main {
     font-size: .75rem;
     overflow-x: scroll;
     padding: 1.5em 1em;
+}
+
+.tags {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.tags a {
+    margin-left: 1em;
 }

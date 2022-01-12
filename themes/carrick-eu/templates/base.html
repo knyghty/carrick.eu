@@ -116,6 +116,7 @@
       {% for title, link in MENUITEMS %}
         <a href="{{ link }}">{{ title }}</a>
       {% endfor %}
+        <a href="{{ SITEURL }}/blog/">Blog</a>
       {% if DISPLAY_PAGES_ON_MENU %}
         {% for p in pages %}
           <a href="{{ SITEURL }}/{{ p.url }}"{% if p == page %} aria-current="page"{% endif %}>{{ p.title }}</a>
