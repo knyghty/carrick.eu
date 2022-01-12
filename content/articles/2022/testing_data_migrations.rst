@@ -49,8 +49,13 @@ with potential problems that aborting a deployment can entail.
 How to test your data migrations?
 =================================
 
-Let's use the example above and say we have the following data migration:
+If you find yourself doing this a lot, there is a package called
+`django-test-migrations`_. I haven't used it myself but it will probably have
+fewer problems than the simple apprach below.
+However, if you're averse to installing yet another package, let's see what
+we can put together without too much work.
 
+Let's use the example above and say we have the following data migration:
 
 ..  code-block:: python
 
@@ -75,7 +80,6 @@ To test migrations like this, I decided to write a small class to
 run the migrations. You may notice that this is a class with a single
 method and ``__init__``, so it could just be a function, but setting
 the ``apps`` attribute felt better than returning ``apps`` directly.
-
 
 .. code-block:: python
 
@@ -181,3 +185,4 @@ So, get out there and test those data migrations.
 
 
 .. _skipping migrations: https://docs.djangoproject.com/en/4.0/ref/settings/#migrate
+.. _django-test-migrations: https://github.com/wemake-services/django-test-migrations
