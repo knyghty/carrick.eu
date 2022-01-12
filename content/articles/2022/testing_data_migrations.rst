@@ -50,8 +50,8 @@ How to test your data migrations?
 =================================
 
 If you find yourself doing this a lot, there is a package called
-`django-test-migrations`_. I haven't used it myself but it will probably have
-fewer problems than the simple apprach below.
+`django-test-migrations`_. I haven't used it myself but it will probably be
+more robust than the simple approach below.
 However, if you're averse to installing yet another package, let's see what
 we can put together without too much work.
 
