@@ -41,6 +41,11 @@ with potential problems that aborting a deployment can entail.&lt;/p&gt;
 &lt;/div&gt;
 &lt;div class="section" id="how-to-test-your-data-migrations"&gt;
 &lt;h2&gt;How to test your data migrations?&lt;/h2&gt;
+&lt;p&gt;If you find yourself doing this a lot, there is a package called
+&lt;a class="reference external" href="https://github.com/wemake-services/django-test-migrations"&gt;django-test-migrations&lt;/a&gt;. I haven't used it myself but it will probably have
+fewer problems than the simple apprach below.
+However, if you're averse to installing yet another package, let's see what
+we can put together without too much work.&lt;/p&gt;
 &lt;p&gt;Let's use the example above and say we have the following data migration:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.db&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;migrations&lt;/span&gt;
 
