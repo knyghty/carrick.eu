@@ -6,7 +6,7 @@ About
 
 This site is made with `Pelican`_, a Python-powered static site generator.
 There are a lot of SSGs out there, but I went with this one as it's written in Python,
-so I can eeasily extend it if I need to.
+so I can easily extend it if I need to.
 
 I wrote the theme myself. It's designed to be minimalist, have semantic markup,
 clean, modern CSS and use only system fonts. All these help keep the page size to a
