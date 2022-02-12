@@ -298,3 +298,24 @@ main {
 .tags a {
     margin-left: 1em;
 }
+
+.admonition {
+    padding: 1em;
+}
+
+.admonition p {
+    margin: 0;
+}
+
+.admonition-title {
+    font-weight: bold;
+    padding-bottom: .5em;
+}
+
+.admonition.warning {
+    background: #ffe0ad;
+}
+
+.admonition.warning .admonition-title::before {
+    content: "⚠️ ";
+}
