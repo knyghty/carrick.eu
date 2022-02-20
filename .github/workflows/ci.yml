@@ -61,7 +61,7 @@ jobs:
         run: pipenv run pelican content -s publishconf.py
       - name: Clean up
         run: rm -r output/theme/.webassets-cache
-      - uses: JamesIves/github-pages-deploy-action@4.1.7
+      - uses: JamesIves/github-pages-deploy-action@v4.2.5
         with:
           branch: gh-pages
           folder: output
