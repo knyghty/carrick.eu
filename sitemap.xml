@@ -5,7 +5,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://carrick.eu/</loc>
-<lastmod>2022-07-05T09:56:42-00:00</lastmod>
+<lastmod>2022-09-06T06:39:59-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
@@ -19,7 +19,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://carrick.eu/about/</loc>
-<lastmod>2022-07-05T09:56:42-00:00</lastmod>
+<lastmod>2022-09-06T06:39:59-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
@@ -40,49 +40,49 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://carrick.eu/category/misc.html</loc>
-<lastmod>2022-02-12T00:00:00+00:20</lastmod>
+<lastmod>2022-02-12T00:00:00+00:18</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
 
 <url>
 <loc>https://carrick.eu/blog/tags/dependencies/</loc>
-<lastmod>2022-02-12T00:00:00+00:20</lastmod>
+<lastmod>2022-02-12T00:00:00+00:18</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
 
 <url>
 <loc>https://carrick.eu/blog/tags/github-actions/</loc>
-<lastmod>2022-02-12T00:00:00+00:20</lastmod>
+<lastmod>2022-02-12T00:00:00+00:18</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
 
 <url>
 <loc>https://carrick.eu/blog/tags/django/</loc>
-<lastmod>2022-01-12T00:00:00+00:20</lastmod>
+<lastmod>2022-01-12T00:00:00+00:18</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
 
 <url>
 <loc>https://carrick.eu/blog/tags/testing/</loc>
-<lastmod>2022-01-12T00:00:00+00:20</lastmod>
+<lastmod>2022-01-12T00:00:00+00:18</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
 
 <url>
 <loc>https://carrick.eu/blog/tags/migrations/</loc>
-<lastmod>2022-01-12T00:00:00+00:20</lastmod>
+<lastmod>2022-01-12T00:00:00+00:18</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
 
 <url>
 <loc>https://carrick.eu/author/tom-carrick.html</loc>
-<lastmod>2022-02-12T00:00:00+00:20</lastmod>
+<lastmod>2022-02-12T00:00:00+00:18</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
