@@ -91,7 +91,9 @@
     <meta name="twitter:site" content="@knyghty">
   {% endblock head %}
 
-  <header class="site-header">
+  <a class="skip-link" href='#main'>Skip to content</a>
+
+  <header class="site-header" role="banner">
     <nav>
       <a href="{{ SITEURL }}/" class="home-link"{% if page and page.url == "" %} aria-current="page"{% endif %}>
         <svg
@@ -124,7 +126,7 @@
       {% endif %}
     </nav>
   </header>
-  <main>
+  <main id="main">
     {% block content %}{% endblock %}
   </main>
   <footer class="site-footer">

@@ -109,6 +109,20 @@ body {
 
 /* Site header. */
 
+.skip-link {
+    background: #000;
+    color: #fff;
+    font-weight: 700;
+    left: 50%;
+    padding: 4px;
+    position: absolute;
+    transform: translateY(-100%);
+}
+
+.skip-link:focus {
+    transform: translateY(0%);
+}
+
 .site-header {
     grid-area: site-header;
     padding: 10px;
