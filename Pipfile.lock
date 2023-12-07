@@ -775,10 +775,11 @@
         },
         "types-docutils": {
             "hashes": [
-                "sha256:a334a703a8688910d0869464f1f6f8bd330d75843bdab4f893547bfb29417a01",
-                "sha256:b7e182f371cbe20828a8750ffb150219968452445946f66f33778b08e81c7d89"
+                "sha256:4928e790f42b99d5833990f99c8dd9fa9f16825f6ed30380ca981846d36870cd",
+                "sha256:a930150d8e01a9170f9bca489f46808ddebccdd8bc1e47c07968a77e49fb9321"
             ],
-            "version": "==0.19.1.6"
+            "index": "pypi",
+            "version": "==0.20.0.3"
         },
         "typing-extensions": {
             "hashes": [
