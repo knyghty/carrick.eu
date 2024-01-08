@@ -1509,11 +1509,12 @@
         },
         "types-docutils": {
             "hashes": [
-                "sha256:4928e790f42b99d5833990f99c8dd9fa9f16825f6ed30380ca981846d36870cd",
-                "sha256:a930150d8e01a9170f9bca489f46808ddebccdd8bc1e47c07968a77e49fb9321"
+                "sha256:03992ec976fbe080db588e1e56a83c5e4aba5c733022b25bb26cb84397b96049",
+                "sha256:d408f9305761905b157ea3cb80f53d4026bce7d4cc47312939118715467d0278"
             ],
             "index": "pypi",
-            "version": "==0.20.0.3"
+            "markers": "python_version >= '3.8'",
+            "version": "==0.20.0.20240106"
         },
         "typing-extensions": {
             "hashes": [
