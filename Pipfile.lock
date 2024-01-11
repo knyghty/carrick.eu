@@ -850,7 +850,6 @@
                 "sha256:fd9e98b408384989ea4ab60206b8e100d8687da18b5c813c11e92fd8212a98e0",
                 "sha256:ffff855100bc066ff2cd3aa4a60bc9534661816b110f0243e59503ec2df38421"
             ],
-            "index": "pypi",
             "markers": "python_version >= '3.7'",
             "version": "==2.14.6"
         },
@@ -949,7 +948,6 @@
                 "sha256:23478f88c37f27d76ac8aee6c905017a143b0b1b886c3c9f66bc2fd94f9f5783",
                 "sha256:af72aea155e91adfc61c3ae9e0e342dbc0cba726d6cba4b6c72c1f34e47291cd"
             ],
-            "index": "pypi",
             "markers": "python_version >= '3.8'",
             "version": "==4.9.0"
         },
