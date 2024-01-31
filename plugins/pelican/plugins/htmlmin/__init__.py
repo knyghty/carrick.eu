@@ -3,6 +3,7 @@ A Pelican plugin which minifies HTML pages.
 
 Based on https://github.com/PhasecoreX/pelican-minify
 """
+
 import logging
 import os
 
