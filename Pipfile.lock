@@ -503,11 +503,12 @@
         },
         "ipython": {
             "hashes": [
-                "sha256:3910c4b54543c2ad73d06579aa771041b7d5707b033bd488669b4cf544e3b363",
-                "sha256:b0340d46a933d27c657b211a329d0be23793c36595acf9e6ef4164bc01a1804c"
+                "sha256:1050a3ab8473488d7eee163796b02e511d0735cf43a04ba2a8348bd0f2eaf8a5",
+                "sha256:48fbc236fbe0e138b88773fa0437751f14c3645fb483f1d4c5dee58b37e5ce73"
             ],
-            "markers": "python_version >= '3.8'",
-            "version": "==8.12.3"
+            "index": "pypi",
+            "markers": "python_version >= '3.10'",
+            "version": "==8.21.0"
         },
         "isort": {
             "hashes": [
