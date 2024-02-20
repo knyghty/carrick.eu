@@ -787,11 +787,12 @@
         },
         "nbconvert": {
             "hashes": [
-                "sha256:813e6553796362489ae572e39ba1bff978536192fb518e10826b0e8cadf03ec8",
-                "sha256:ad3dc865ea6e2768d31b7eb6c7ab3be014927216a5ece3ef276748dd809054c7"
+                "sha256:3188727dffadfdc9c6a1c7250729063d7bc78b355ad7aa023138afa030d1cd07",
+                "sha256:e79e6a074f49ba3ed29428ed86487bf51509d9aab613bd8522ac08f6d28fd7fd"
             ],
+            "index": "pypi",
             "markers": "python_version >= '3.8'",
-            "version": "==7.16.0"
+            "version": "==7.16.1"
         },
         "nbformat": {
             "hashes": [
