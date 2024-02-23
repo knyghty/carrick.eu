@@ -17,9 +17,14 @@ updates:
     assignees:
       - "knyghty"
     directory: "/"
+    groups:
+      all:
+        patterns:
+          - "*"
     reviewers:
       - "knyghty"
     schedule:
-      interval: "daily"
+      day: "monday"
+      interval: "weekly"
       time: "09:00"
       timezone: "Europe/Amsterdam"
