@@ -1,5 +1,44 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tom Carrick - dependencies</title><link href="https://carrick.eu/" rel="alternate"></link><link href="https://carrick.eu/feeds/dependencies.atom.xml" rel="self"></link><id>https://carrick.eu/</id><updated>2022-02-12T00:00:00+01:00</updated><entry><title>Automatically updating dependencies with dependabot</title><link href="https://carrick.eu/blog/automatically-updating-dependencies-with-dependabot/" rel="alternate"></link><published>2022-02-12T00:00:00+01:00</published><updated>2022-02-12T00:00:00+01:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2022-02-12:/blog/automatically-updating-dependencies-with-dependabot/</id><summary type="html">&lt;p&gt;Outdated packages can open your application up to security issues. Moreover,
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tom Carrick - dependencies</title><link href="https://carrick.eu/" rel="alternate"></link><link href="https://carrick.eu/feeds/dependencies.atom.xml" rel="self"></link><id>https://carrick.eu/</id><updated>2024-07-09T00:00:00+02:00</updated><entry><title>Faster dependabot updates with groups</title><link href="https://carrick.eu/blog/faster-dependabot-updates-with-groups/" rel="alternate"></link><published>2024-07-09T00:00:00+02:00</published><updated>2024-07-09T00:00:00+02:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2024-07-09:/blog/faster-dependabot-updates-with-groups/</id><summary type="html">&lt;p&gt;Back in 2022, I wrote about &lt;a class="reference external" href="https://carrick.eu/blog/automatically-updating-dependencies-with-dependabot/"&gt;automatically updating dependencies with dependabot&lt;/a&gt;.
+However, this can be quite tedious. If you have a lot of dependencies, or even
+if you don't, you'll likely get spammed with many pull requests on your scheduled
+update time. This can be quite annoying, especially if you …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Back in 2022, I wrote about &lt;a class="reference external" href="https://carrick.eu/blog/automatically-updating-dependencies-with-dependabot/"&gt;automatically updating dependencies with dependabot&lt;/a&gt;.
+However, this can be quite tedious. If you have a lot of dependencies, or even
+if you don't, you'll likely get spammed with many pull requests on your scheduled
+update time. This can be quite annoying, especially if you have a lot of repositories.&lt;/p&gt;
+&lt;p&gt;Every time you merge one of these pull requests, if you're strict about only merging
+branches when they're up to date with the base branch, you'll have to update the next
+pull request, wait for all your CI checks to pass, burning through your GitHub actions
+minutes (or other CI credits), and warming the planet a little. And then, the next PR.
+And the next. And the next.&lt;/p&gt;
+&lt;p&gt;Now, you can just YOLO merge without updating the branch if you're happy to take the risk.
+And it doesn't take much time to update the branch, you can spread this out over a day in
+those few minutes between tasks, or when pretending to pay attention in a meeting,
+but you don't need to do any of this anymore.&lt;/p&gt;
+&lt;p&gt;Last year, GitHub released a grouping feature for dependabot.
+You can now group your dependencies in the dependabot configuration like so:&lt;/p&gt;
+&lt;p&gt;&lt;tt class="docutils literal"&gt;.github/dependabot.yml&lt;/tt&gt;&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="nt"&gt;version&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="l l-Scalar l-Scalar-Plain"&gt;2&lt;/span&gt;
+&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nt"&gt;package-ecosystem&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;pip&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;directory&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;/&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;groups&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;all&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;patterns&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;        &lt;/span&gt;&lt;span class="p p-Indicator"&gt;-&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;*&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;  &lt;/span&gt;&lt;span class="nt"&gt;schedule&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;day&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;monday&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;interval&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;weekly&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;time&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;09:00&amp;quot;&lt;/span&gt;
+&lt;span class="w"&gt;    &lt;/span&gt;&lt;span class="nt"&gt;timezone&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Europe/Amsterdam&amp;quot;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I simplified the configuration a bit from last time, but the important thing is the
+&lt;tt class="docutils literal"&gt;groups&lt;/tt&gt; key. This allows you to group your dependencies by a pattern. In this case,
+I'm grouping all dependencies with the pattern &lt;tt class="docutils literal"&gt;*&lt;/tt&gt;. This will group all dependencies
+together, so you'll only get one pull request for all your dependencies, rather than
+one for each. You can have multiple groups, so you can group your dependencies however
+you like, although I don't personally find much utility in this.&lt;/p&gt;
+&lt;p&gt;A huge time saver, and a huge annoyance saver.&lt;/p&gt;
+</content><category term="misc"></category><category term="dependencies"></category><category term="github-actions"></category></entry><entry><title>Automatically updating dependencies with dependabot</title><link href="https://carrick.eu/blog/automatically-updating-dependencies-with-dependabot/" rel="alternate"></link><published>2022-02-12T00:00:00+01:00</published><updated>2024-07-09T00:00:00+02:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2022-02-12:/blog/automatically-updating-dependencies-with-dependabot/</id><summary type="html">&lt;p&gt;Outdated packages can open your application up to security issues. Moreover,
 newer versions will often have performance improvements, bug fixes and generally
 fewer problems. Keeping them up to date over multiple codebases can be quite
 painful, but it's possible to bring this effort down to close to zero with a …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Outdated packages can open your application up to security issues. Moreover,
@@ -45,7 +84,7 @@ is enabled for your repository.&lt;/p&gt;
 &lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;time&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;09:00&amp;quot;&lt;/span&gt;
 &lt;span class="w"&gt;      &lt;/span&gt;&lt;span class="nt"&gt;timezone&lt;/span&gt;&lt;span class="p"&gt;:&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="s"&gt;&amp;quot;Europe/Amsterdam&amp;quot;&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
-&lt;p&gt;The confiration is quite straightforward. Note there are two &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;package-ecosystem&lt;/span&gt;&lt;/tt&gt;
+&lt;p&gt;The configuration is quite straightforward. Note there are two &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;package-ecosystem&lt;/span&gt;&lt;/tt&gt;
 sections defined. One of these is for pip, which will also work for pipenv and poetry.
 The other will keep any GitHub actions you use up to date. We'll be using one of
 these soon, so it seemed good to add it. You can set the schedule however makes sense
@@ -54,9 +93,9 @@ them so they show up in my GitHub notifications and I can make sure I don't miss
 anything. Not every update will be able to be merged automatically, so it's good
 to know about them.&lt;/p&gt;
 &lt;p&gt;One other important thing here is the &lt;tt class="docutils literal"&gt;allow&lt;/tt&gt; section. Here I've set
-&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;dependency-type&lt;/span&gt;&lt;/tt&gt; to &lt;tt class="docutils literal"&gt;all&lt;/tt&gt;, which means that subdependencies will also be updated.
+&lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;dependency-type&lt;/span&gt;&lt;/tt&gt; to &lt;tt class="docutils literal"&gt;all&lt;/tt&gt;, which means that sub-dependencies will also be updated.
 Without this, only explicitly defined dependencies will be updated.&lt;/p&gt;
-&lt;p&gt;Other &lt;a class="reference external" href="https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates"&gt;configuration options&lt;/a&gt; are availble.&lt;/p&gt;
+&lt;p&gt;Other &lt;a class="reference external" href="https://docs.github.com/en/code-security/supply-chain-security/keeping-your-dependencies-updated-automatically/configuration-options-for-dependency-updates"&gt;configuration options&lt;/a&gt; are available.&lt;/p&gt;
 &lt;p&gt;Adding this file is enough for dependabot to submit pull requests on your repo with
 package updates. We need to do a bit more to get them merging automatically. For this,
 we need GitHub Actions.&lt;/p&gt;
@@ -106,7 +145,7 @@ what happens here, however. My assumption is that it'll do its best to figure it
 and assume it's a major version. But it may be that if it doesn't look like it's using
 semver, it will not count as a major update and will be merged automatically.
 If anyone does know the answer to this, I would &lt;a class="reference external" href="mailto:tom&amp;#64;carrick.eu"&gt;love to hear it&lt;/a&gt;. Luckily, most
-packages use something similarto semantic versioning these days so I haven't yet had any
+packages use something similar to semantic versioning these days so I haven't yet had any
 problems. I'll update this post if I notice any.&lt;/p&gt;
 &lt;p&gt;I hope this saves you some time you could be using for something more fun.&lt;/p&gt;
 </content><category term="misc"></category><category term="dependencies"></category><category term="github-actions"></category></entry></feed>
