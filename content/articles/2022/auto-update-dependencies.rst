@@ -2,6 +2,7 @@ Automatically updating dependencies with dependabot
 ###################################################
 
 :date: 2022-02-12
+:modified: 2024-07-09
 :tags: dependencies, github-actions
 :has_code: true
 
@@ -56,7 +57,7 @@ Next, you'll need to create a new file for the dependabot configuration:
           timezone: "Europe/Amsterdam"
 
 
-The confiration is quite straightforward. Note there are two ``package-ecosystem``
+The configuration is quite straightforward. Note there are two ``package-ecosystem``
 sections defined. One of these is for pip, which will also work for pipenv and poetry.
 The other will keep any GitHub actions you use up to date. We'll be using one of
 these soon, so it seemed good to add it. You can set the schedule however makes sense
@@ -66,10 +67,10 @@ anything. Not every update will be able to be merged automatically, so it's good
 to know about them.
 
 One other important thing here is the ``allow`` section. Here I've set
-``dependency-type`` to ``all``, which means that subdependencies will also be updated.
+``dependency-type`` to ``all``, which means that sub-dependencies will also be updated.
 Without this, only explicitly defined dependencies will be updated.
 
-Other `configuration options`_ are availble.
+Other `configuration options`_ are available.
 
 Adding this file is enough for dependabot to submit pull requests on your repo with
 package updates. We need to do a bit more to get them merging automatically. For this,
@@ -124,7 +125,7 @@ what happens here, however. My assumption is that it'll do its best to figure it
 and assume it's a major version. But it may be that if it doesn't look like it's using
 semver, it will not count as a major update and will be merged automatically.
 If anyone does know the answer to this, I would `love to hear it`_. Luckily, most
-packages use something similarto semantic versioning these days so I haven't yet had any
+packages use something similar to semantic versioning these days so I haven't yet had any
 problems. I'll update this post if I notice any.
 
 I hope this saves you some time you could be using for something more fun.
