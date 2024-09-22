@@ -7,8 +7,9 @@ Based on https://github.com/PhasecoreX/pelican-minify
 import logging
 import os
 
-from htmlmin import minify
 from pelican import signals
+
+from htmlmin import minify
 
 # We need save unicode strings to files.
 try:
@@ -46,11 +47,11 @@ def create_minified_file(filename, options):
 
     with open(filename, "w", encoding="utf-8") as f:
         try:
-            logger.debug("Minifying: %s" % filename)
+            logger.debug("Minifying: %s", filename)
             compressed = minify(uncompressed, **options)
             f.write(compressed)
         except Exception as ex:
-            logger.critical("HTML Minification failed: %s" % ex)
+            logger.critical("HTML Minification failed: %s", ex)
 
 
 def register():

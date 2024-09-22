@@ -2,7 +2,7 @@ AUTHOR = "Tom Carrick"
 SITENAME = "Tom Carrick"
 SITEURL = "http://localhost:8000"
 
-HTML_TITLE_SUBTITLE = "Web development consultat using Pythong &amp; Django"
+HTML_TITLE_SUBTITLE = "Web development consultant using Python &amp; Django"
 
 PATH = "content"
 THEME = "themes/carrick-eu"

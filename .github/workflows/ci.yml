@@ -14,51 +14,31 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          cache: pipenv
-          python-version: "3.10"
-      - name: Install Pipenv
-        run: pip install pipenv
+          cache: pip
+          python-version: "3.12"
+      - name: Install uv
+        run: pip install uv
       - name: Install dependencies
-        run: pipenv install
-
-  black:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: psf/black@stable
-
-  isort:
-    # Dependencies must to be installed to correctly sort third-party libraries.
-    needs: [dependencies]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
-        with:
-          cache: pipenv
-          python-version: "3.10"
-      - name: Install Pipenv
-        run: pip install pipenv
-      - name: Run isort
-        run: pipenv run isort --check-only --diff .
+        run: uv pip install -r pyproject.toml
 
   deploy:
     runs-on: ubuntu-latest
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
-    needs: [black, isort]
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
       - uses: actions/setup-python@v5
         with:
-          cache: pipenv
-          python-version: "3.10"
-      - name: Install Pipenv
-        run: pip install pipenv
+          cache: pip
+          python-version: "3.12"
+      - name: Install uv
+        run: pip install uv
+      - name: Install dependencies
+        run: uv pip install -r pyproject.toml
       - name: Install clean-css
         run: npm install -g clean-css-cli
       - name: Build site
-        run: pipenv run pelican content -s publishconf.py
+        run: pelican content -s publishconf.py
       - name: Clean up
         run: rm -r output/theme/.webassets-cache
       - uses: JamesIves/github-pages-deploy-action@v4.6.4

@@ -1,2 +1,23 @@
-[tool.isort]
-profile = 'black'
+[project]
+classifiers = ["Private :: Do Not Upload"]
+dependencies = [
+    "blacken-docs",
+    "pelican",
+    "pelican-sitemap",
+    "pelican-webassets",
+    "pygments",
+]
+name = "carrick-eu"
+version = "0"
+
+[project.optional-dependencies]
+dev = ["pre-commit", "rstcheck"]
+
+[tool.ruff]
+target-version = "py312"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "W"]
+
+[tool.ruff.lint.isort]
+force-single-line = true
