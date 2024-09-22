@@ -1,5 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tom Carrick</title><link href="https://carrick.eu/" rel="alternate"></link><link href="https://carrick.eu/feeds/all.atom.xml" rel="self"></link><id>https://carrick.eu/</id><updated>2024-07-09T00:00:00+02:00</updated><entry><title>Faster dependabot updates with groups</title><link href="https://carrick.eu/blog/faster-dependabot-updates-with-groups/" rel="alternate"></link><published>2024-07-09T00:00:00+02:00</published><updated>2024-07-09T00:00:00+02:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2024-07-09:/blog/faster-dependabot-updates-with-groups/</id><summary type="html">&lt;p&gt;Back in 2022, I wrote about &lt;a class="reference external" href="https://carrick.eu/blog/automatically-updating-dependencies-with-dependabot/"&gt;automatically updating dependencies with dependabot&lt;/a&gt;.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tom Carrick</title><link href="https://carrick.eu/" rel="alternate"></link><link href="https://carrick.eu/feeds/all.atom.xml" rel="self"></link><id>https://carrick.eu/</id><updated>2024-09-22T00:00:00+02:00</updated><entry><title>Ensuring a block is overridden in a Django template</title><link href="https://carrick.eu/blog/ensuring-a-block-is-overridden-in-a-django-template/" rel="alternate"></link><published>2024-09-22T00:00:00+02:00</published><updated>2024-09-22T00:00:00+02:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2024-09-22:/blog/ensuring-a-block-is-overridden-in-a-django-template/</id><summary type="html">&lt;p&gt;Some bugs are hard to even notice. For example, what if you forgot
+to add a title to one of your web pages? Oops! You're probably left
+with a generic title of only your site name, or worse, no title at all.
+And it's very tricky to spot this. Most …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Some bugs are hard to even notice. For example, what if you forgot
+to add a title to one of your web pages? Oops! You're probably left
+with a generic title of only your site name, or worse, no title at all.
+And it's very tricky to spot this. Most people testing a page won't even
+look at the title, they will go straight to the content.&lt;/p&gt;
+&lt;p&gt;We could write a script to track down all the pages without a title, but
+this is probably a time-consuming task, and you'll need to remember to run
+this, or put it in CI and slow your build down. But an ounce of prevention
+is worth a pound of cure. Let's make sure we can't forget to add a title
+for our pages. We can do this by putting a block on our base template that
+must be overridden in extending templates.&lt;/p&gt;
+&lt;p&gt;Let's assume we have a simple Django base template like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt; &lt;span class="na"&gt;lang&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;tok&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;charset&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;utf-8&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;viewport&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;content&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;block&lt;/span&gt; &lt;span class="nv"&gt;title&lt;/span&gt; &lt;span class="cp"&gt;%}{%&lt;/span&gt; &lt;span class="k"&gt;endblock&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt; - kulupu mi&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;block&lt;/span&gt; &lt;span class="nv"&gt;content&lt;/span&gt; &lt;span class="cp"&gt;%}{%&lt;/span&gt; &lt;span class="k"&gt;endblock&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And our home page template extending it:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;extends&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;base.html&amp;quot;&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;
+
+&lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;block&lt;/span&gt; &lt;span class="nv"&gt;content&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;kama pona&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;h1&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;toki! mi jan Tami!&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;p&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;endblock&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;This will render the title as &amp;quot; - kulupu mi&amp;quot; on the home page. Oopsie.&lt;/p&gt;
+&lt;p&gt;Okay, let's actually fix this. All we need to do is add a template tag that
+raises an exception, and stick it in the right place in the base template.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;template&lt;/span&gt;
+
+&lt;span class="n"&gt;register&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;template&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Library&lt;/span&gt;&lt;span class="p"&gt;()&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;BlockNotOverriddenError&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="ne"&gt;NotImplementedError&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="k"&gt;pass&lt;/span&gt;
+
+
+&lt;span class="nd"&gt;@register&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;simple_tag&lt;/span&gt;
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;ensure_overridden&lt;/span&gt;&lt;span class="p"&gt;():&lt;/span&gt;
+    &lt;span class="k"&gt;raise&lt;/span&gt; &lt;span class="n"&gt;BlockNotOverriddenError&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;I choose to create a new exception class, &lt;cite&gt;BlockNotOverriddenError&lt;/cite&gt;, to make
+it clear what the error is, and make it easier to test, based on a
+&lt;a class="reference external" href="https://guicommits.com/handling-exceptions-in-python-like-a-pro/"&gt;blog post on handling exceptions&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;Then in our template, a single change on the title line:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="cp"&gt;&amp;lt;!doctype html&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt; &lt;span class="na"&gt;lang&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;tok&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;charset&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;utf-8&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;meta&lt;/span&gt; &lt;span class="na"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;viewport&amp;quot;&lt;/span&gt; &lt;span class="na"&gt;content&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s"&gt;&amp;quot;width=device-width, initial-scale=1.0&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;&lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;block&lt;/span&gt; &lt;span class="nv"&gt;title&lt;/span&gt; &lt;span class="cp"&gt;%}{%&lt;/span&gt; &lt;span class="k"&gt;ensure_overridden&lt;/span&gt; &lt;span class="cp"&gt;%}{%&lt;/span&gt; &lt;span class="k"&gt;endblock&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt; - kulupu mi&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;title&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;head&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+    &lt;span class="cp"&gt;{%&lt;/span&gt; &lt;span class="k"&gt;block&lt;/span&gt; &lt;span class="nv"&gt;content&lt;/span&gt; &lt;span class="cp"&gt;%}{%&lt;/span&gt; &lt;span class="k"&gt;endblock&lt;/span&gt; &lt;span class="cp"&gt;%}&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;body&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;span class="p"&gt;&amp;lt;/&lt;/span&gt;&lt;span class="nt"&gt;html&lt;/span&gt;&lt;span class="p"&gt;&amp;gt;&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Now if we try to extend this without overriding the title block, we'll get
+an exception when we try to load the page, and our tests will fail. You
+did write a test for this page, right?&lt;/p&gt;
+&lt;p&gt;In your next (or current) Django project, don't run into this class of bug
+anymore. Throw in this single line template tag and improve your SEO.&lt;/p&gt;
+</content><category term="misc"></category><category term="django"></category><category term="templates"></category></entry><entry><title>Faster dependabot updates with groups</title><link href="https://carrick.eu/blog/faster-dependabot-updates-with-groups/" rel="alternate"></link><published>2024-07-09T00:00:00+02:00</published><updated>2024-07-09T00:00:00+02:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2024-07-09:/blog/faster-dependabot-updates-with-groups/</id><summary type="html">&lt;p&gt;Back in 2022, I wrote about &lt;a class="reference external" href="https://carrick.eu/blog/automatically-updating-dependencies-with-dependabot/"&gt;automatically updating dependencies with dependabot&lt;/a&gt;.
 However, this can be quite tedious. If you have a lot of dependencies, or even
 if you don't, you'll likely get spammed with many pull requests on your scheduled
 update time. This can be quite annoying, especially if you …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Back in 2022, I wrote about &lt;a class="reference external" href="https://carrick.eu/blog/automatically-updating-dependencies-with-dependabot/"&gt;automatically updating dependencies with dependabot&lt;/a&gt;.

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+      <meta charset="utf-8">
+    <title>Ensuring a block is overridden in a Django template | Tom Carrick</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://carrick.eu/theme/images/logo.svg" rel="icon"type="image/svg+xml">
+      <link href="https://carrick.eu/theme/css/main.min.css?9554b41f" rel="stylesheet">
+    <meta name="author" content="Tom Carrick">
+    <meta name="generator" content="Pelican">
+      <link
+        href="https://carrick.eu/feeds/all.atom.xml"
+        type="application/atom+xml"
+        rel="alternate"
+        title="Tom Carrick Full Atom Feed"
+      >
+    <meta property="og:site_name" content="Tom Carrick">
+    <meta property="og:locale" content="en_GB">
+
+      <meta property="og:image" content="https://carrick.eu/theme/images/logo.png">
+      <meta property="og:image:alt" content="Tom Carrick">
+      <meta property="og:image:width" content="300">
+      <meta property="og:image:height" content="300">
+      <meta name="twitter:image" content="https://carrick.eu/theme/images/logo.png">
+      <meta name="twitter:image:alt" content="Tom Carrick">
+      <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:creator" content="@knyghty">
+    <meta name="twitter:site" content="@knyghty">
+
+
+      <link href="https://carrick.eu/theme/css/pygments-default.min.css?6a4fb53a" rel="stylesheet">
+
+  <link href="https://carrick.eu/blog/ensuring-a-block-is-overridden-in-a-django-template/" rel="canonical">
+
+
+  <meta property="og:url" content="https://carrick.eu/blog/ensuring-a-block-is-overridden-in-a-django-template/">
+
+
+    <meta name="tags" content="django">
+    <meta name="tags" content="templates">
+
+  <a class="skip-link" href='#main'>Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav>
+      <a href="https://carrick.eu/" class="home-link">
+        <svg
+          viewBox="0 0 90 90"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#9b59d0"
+          class="logo"
+          role="presentation"
+        >
+          <g class="t">
+            <rect width="74" height="16"></rect>
+            <rect x="31" height="90" width="16"></rect>
+          </g>
+          <g class="c">
+            <rect x="31" height="16" width="55"></rect>
+            <rect x="31" height="90" width="16"></rect>
+            <rect x="31" y="74" height="16" width="55"></rect>
+          </g>
+        </svg>
+        Home
+      </a>
+        <a href="https://carrick.eu/blog/">Blog</a>
+          <a href="https://carrick.eu/cv/">CV</a>
+          <a href="https://carrick.eu/about/">About</a>
+    </nav>
+  </header>
+  <main id="main">
+  <section class="content-area">
+    <header class="content-header">
+      <h1>Ensuring a block is overridden in a Django template</h1>
+      Published: <time datetime="2024-09-22T00:00:00+02:00">22 September 2024</time>
+      
+    </header>
+
+    <div class="content">
+      <p>Some bugs are hard to even notice. For example, what if you forgot
+to add a title to one of your web pages? Oops! You're probably left
+with a generic title of only your site name, or worse, no title at all.
+And it's very tricky to spot this. Most people testing a page won't even
+look at the title, they will go straight to the content.</p>
+<p>We could write a script to track down all the pages without a title, but
+this is probably a time-consuming task, and you'll need to remember to run
+this, or put it in CI and slow your build down. But an ounce of prevention
+is worth a pound of cure. Let's make sure we can't forget to add a title
+for our pages. We can do this by putting a block on our base template that
+must be overridden in extending templates.</p>
+<p>Let's assume we have a simple Django base template like this:</p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;!doctype html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;tok&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1.0&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span><span class="cp">{%</span> <span class="k">block</span> <span class="nv">title</span> <span class="cp">%}{%</span> <span class="k">endblock</span> <span class="cp">%}</span> - kulupu mi<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="cp">{%</span> <span class="k">block</span> <span class="nv">content</span> <span class="cp">%}{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+<p>And our home page template extending it:</p>
+<div class="highlight"><pre><span></span><span class="cp">{%</span> <span class="k">extends</span> <span class="s2">&quot;base.html&quot;</span> <span class="cp">%}</span>
+
+<span class="cp">{%</span> <span class="k">block</span> <span class="nv">content</span> <span class="cp">%}</span>
+    <span class="p">&lt;</span><span class="nt">h1</span><span class="p">&gt;</span>kama pona<span class="p">&lt;/</span><span class="nt">h1</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">p</span><span class="p">&gt;</span>toki! mi jan Tami!<span class="p">&lt;/</span><span class="nt">p</span><span class="p">&gt;</span>
+<span class="cp">{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
+</pre></div>
+<p>This will render the title as &quot; - kulupu mi&quot; on the home page. Oopsie.</p>
+<p>Okay, let's actually fix this. All we need to do is add a template tag that
+raises an exception, and stick it in the right place in the base template.</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">template</span>
+
+<span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
+
+
+<span class="k">class</span> <span class="nc">BlockNotOverriddenError</span><span class="p">(</span><span class="ne">NotImplementedError</span><span class="p">):</span>
+    <span class="k">pass</span>
+
+
+<span class="nd">@register</span><span class="o">.</span><span class="n">simple_tag</span>
+<span class="k">def</span> <span class="nf">ensure_overridden</span><span class="p">():</span>
+    <span class="k">raise</span> <span class="n">BlockNotOverriddenError</span>
+</pre></div>
+<p>I choose to create a new exception class, <cite>BlockNotOverriddenError</cite>, to make
+it clear what the error is, and make it easier to test, based on a
+<a class="reference external" href="https://guicommits.com/handling-exceptions-in-python-like-a-pro/">blog post on handling exceptions</a>.</p>
+<p>Then in our template, a single change on the title line:</p>
+<div class="highlight"><pre><span></span><span class="cp">&lt;!doctype html&gt;</span>
+<span class="p">&lt;</span><span class="nt">html</span> <span class="na">lang</span><span class="o">=</span><span class="s">&quot;tok&quot;</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">head</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">charset</span><span class="o">=</span><span class="s">&quot;utf-8&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">meta</span> <span class="na">name</span><span class="o">=</span><span class="s">&quot;viewport&quot;</span> <span class="na">content</span><span class="o">=</span><span class="s">&quot;width=device-width, initial-scale=1.0&quot;</span><span class="p">&gt;</span>
+    <span class="p">&lt;</span><span class="nt">title</span><span class="p">&gt;</span><span class="cp">{%</span> <span class="k">block</span> <span class="nv">title</span> <span class="cp">%}{%</span> <span class="k">ensure_overridden</span> <span class="cp">%}{%</span> <span class="k">endblock</span> <span class="cp">%}</span> - kulupu mi<span class="p">&lt;/</span><span class="nt">title</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">head</span><span class="p">&gt;</span>
+<span class="p">&lt;</span><span class="nt">body</span><span class="p">&gt;</span>
+    <span class="cp">{%</span> <span class="k">block</span> <span class="nv">content</span> <span class="cp">%}{%</span> <span class="k">endblock</span> <span class="cp">%}</span>
+<span class="p">&lt;/</span><span class="nt">body</span><span class="p">&gt;</span>
+<span class="p">&lt;/</span><span class="nt">html</span><span class="p">&gt;</span>
+</pre></div>
+<p>Now if we try to extend this without overriding the title block, we'll get
+an exception when we try to load the page, and our tests will fail. You
+did write a test for this page, right?</p>
+<p>In your next (or current) Django project, don't run into this class of bug
+anymore. Throw in this single line template tag and improve your SEO.</p>
+
+    </div>
+
+    <footer class="content-footer">
+        <div class="tags">
+          Tags:
+            <a href="https://carrick.eu/blog/tags/django/">django</a>
+            <a href="https://carrick.eu/blog/tags/templates/">templates</a>
+        </div>
+    </footer>
+  </section>
+  </main>
+  <footer class="site-footer">
+    © Tom Carrick
+    <ul class="inline unstyled">
+      <li><a href="https://github.com/knyghty">GitHub</a></li>
+      <li><a href="https://twitter.com/knyghty">Twitter</a></li>
+    </ul>
+  </footer>
+  <script src="https://carrick.eu/theme/js/print.js"></script>
+</html>
