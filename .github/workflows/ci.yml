@@ -19,7 +19,7 @@ jobs:
       - name: Install uv
         run: pip install uv
       - name: Install dependencies
-        run: uv pip install --system -r pyproject.toml
+        run: uv pip install --system -r requirements.txt
 
   deploy:
     runs-on: ubuntu-latest
@@ -34,7 +34,7 @@ jobs:
       - name: Install uv
         run: pip install uv
       - name: Install dependencies
-        run: uv pip install --system -r pyproject.toml
+        run: uv pip install --system -r requirements.txt
       - name: Install clean-css
         run: npm install -g clean-css-cli
       - name: Build site
