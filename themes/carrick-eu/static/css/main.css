@@ -220,6 +220,12 @@ main {
     max-width: 36em;
 }
 
+@media screen and (max-width: 760px) {
+    .content {
+        max-width: calc(100vw - 2em);
+    }
+}
+
 .content a[href^="https://"]::after,
 .content a[href^="http://"]::after
 {
