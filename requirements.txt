@@ -142,9 +142,9 @@ pathspec==0.12.1 \
     --hash=sha256:a0d503e138a4c123b27490a4f7beda6a01c6f288df0e4a8b79c7eb0dc7b4cc08 \
     --hash=sha256:a482d51503a1ab33b1c67a6c3813a26953dbdc71c31dacaef9a838c4e29f5712
     # via black
-pelican==4.10.0 \
-    --hash=sha256:7a5b8e035152b030f3f451019c9b25959b760f5e18f2315ae01bf2f583a44af5 \
-    --hash=sha256:90ed89a681c3b65828ffce6810cf73da23996e1b2138862f52bd984f3f526805
+pelican==4.10.1 \
+    --hash=sha256:5fb59933fd9eaff83a5e4e093a9a6249ec59ae0d8e5da63710d965acd6f5d3f7 \
+    --hash=sha256:dfcd468ddb823c70df52545ca413b44505ff2d33132284d2f5a31d217cde6cb8
     # via
     #   carrick-eu (pyproject.toml)
     #   pelican-sitemap
