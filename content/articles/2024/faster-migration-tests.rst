@@ -57,14 +57,14 @@ For a simple data migration:
     from django.db import migrations
 
 
-    def forwards_func(apps, schema_editor):
+    def migrate_name(apps, schema_editor):
         Thing = apps.get_model("myapp", "Thing")
         Thing.objects.filter(name="default").update(name="New default")
 
 
     class Migration(migrations.Migration):
         dependencies = [("myapp", "0001_initial")]
-        operations = [migrations.RunPython(forwards_func)]
+        operations = [migrations.RunPython(migrate_name)]
 
 Now we need to write a test to cover lines 3 to 5. I'll leave this as an exercise
 for the reader. But after you've deployed your app to all deployments, we have
