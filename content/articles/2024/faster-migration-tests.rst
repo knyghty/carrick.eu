@@ -59,7 +59,7 @@ For a simple data migration:
 
     def forwards_func(apps, schema_editor):
         Thing = apps.get_model("myapp", "Thing")
-        Thing.objects.filter(name="default").update(name="Fancier default")
+        Thing.objects.filter(name="default").update(name="New default")
 
 
     class Migration(migrations.Migration):
