@@ -6,7 +6,7 @@ Faster migration tests
 :has_code: true
 
 Almost invariably when I start to work at a new company, I look at the
-configuration and find something like this:
+project configuration and find something like this:
 
 .. code-block:: toml
 
@@ -66,7 +66,7 @@ For a simple data migration:
         dependencies = [("myapp", "0001_initial")]
         operations = [migrations.RunPython(migrate_name)]
 
-Now we need to write a test to cover lines 3 to 5. I'll leave this as an exercise
+Now we need to write a test to cover lines 4 to 6. I'll leave this as an exercise
 for the reader. But after you've deployed your app to all deployments, we have
 this test that takes three seconds to run and doesn't really test anything
 relevant anymore. Three seconds is not too long, but when you have 10 of these,
