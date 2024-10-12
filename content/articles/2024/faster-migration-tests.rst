@@ -5,8 +5,8 @@ Faster migration tests
 :tags: django, migrations
 :has_code: true
 
-Almost invariably when I start to work at a new company, I look at their
-linting configuration and find something like this:
+Almost invariably when I start to work at a new company, I look at the
+configuration and find something like this:
 
 .. code-block:: toml
 
