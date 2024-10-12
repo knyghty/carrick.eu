@@ -78,7 +78,7 @@
 
     <div class="content">
       <p>Almost invariably when I start to work at a new company, I look at the
-configuration and find something like this:</p>
+project configuration and find something like this:</p>
 <div class="highlight"><pre><span></span><span class="k">[tool.coverage.run]</span>
 <span class="n">branch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
 <span class="n">omit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;**/migrations/*&quot;</span><span class="p">]</span>
@@ -134,7 +134,7 @@ the name that came to my head. I'm not sure if it's even a good name.</p>
     <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;myapp&quot;</span><span class="p">,</span> <span class="s2">&quot;0001_initial&quot;</span><span class="p">)]</span>
     <span class="n">operations</span> <span class="o">=</span> <span class="p">[</span><span class="n">migrations</span><span class="o">.</span><span class="n">RunPython</span><span class="p">(</span><span class="n">migrate_name</span><span class="p">)]</span>
 </pre></div></td></tr></table></div>
-<p>Now we need to write a test to cover lines 3 to 5. I'll leave this as an exercise
+<p>Now we need to write a test to cover lines 4 to 6. I'll leave this as an exercise
 for the reader. But after you've deployed your app to all deployments, we have
 this test that takes three seconds to run and doesn't really test anything
 relevant anymore. Three seconds is not too long, but when you have 10 of these,
