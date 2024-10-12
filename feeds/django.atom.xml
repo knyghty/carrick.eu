@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tom Carrick - django</title><link href="https://carrick.eu/" rel="alternate"></link><link href="https://carrick.eu/feeds/django.atom.xml" rel="self"></link><id>https://carrick.eu/</id><updated>2024-10-12T00:00:00+02:00</updated><entry><title>Faster migration tests</title><link href="https://carrick.eu/blog/faster-migration-tests/" rel="alternate"></link><published>2024-10-12T00:00:00+02:00</published><updated>2024-10-12T00:00:00+02:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2024-10-12:/blog/faster-migration-tests/</id><summary type="html">&lt;p&gt;Almost invariably when I start to work at a new company, I look at their
-linting configuration and find something like this:&lt;/p&gt;
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tom Carrick - django</title><link href="https://carrick.eu/" rel="alternate"></link><link href="https://carrick.eu/feeds/django.atom.xml" rel="self"></link><id>https://carrick.eu/</id><updated>2024-10-12T00:00:00+02:00</updated><entry><title>Faster migration tests</title><link href="https://carrick.eu/blog/faster-migration-tests/" rel="alternate"></link><published>2024-10-12T00:00:00+02:00</published><updated>2024-10-12T00:00:00+02:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2024-10-12:/blog/faster-migration-tests/</id><summary type="html">&lt;p&gt;Almost invariably when I start to work at a new company, I look at the
+configuration and find something like this:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[tool.coverage.run]&lt;/span&gt;
 &lt;span class="n"&gt;branch&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;
 &lt;span class="n"&gt;omit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;**/migrations/*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
@@ -9,8 +9,8 @@ linting configuration and find something like this:&lt;/p&gt;
 &lt;span class="n"&gt;exclude&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;**/migrations/*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;My suspicion about how prevalent this is is confirmed by GitHub Copilot
-suggesting it to me the …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Almost invariably when I start to work at a new company, I look at their
-linting configuration and find something like this:&lt;/p&gt;
+suggesting it to me the instant …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Almost invariably when I start to work at a new company, I look at the
+configuration and find something like this:&lt;/p&gt;
 &lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[tool.coverage.run]&lt;/span&gt;
 &lt;span class="n"&gt;branch&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;
 &lt;span class="n"&gt;omit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;**/migrations/*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
