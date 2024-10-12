@@ -22,17 +22,17 @@ Let's assume we have a simple Django base template like this:
 
 .. code-block:: html+django
 
-        <!doctype html>
-        <html lang="tok">
-        <head>
-            <meta charset="utf-8">
-            <meta name="viewport" content="width=device-width, initial-scale=1.0">
-            <title>{% block title %}{% endblock %} - kulupu mi</title>
-        </head>
-        <body>
-            {% block content %}{% endblock %}
-        </body>
-        </html>
+    <!doctype html>
+    <html lang="tok">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}{% endblock %} - kulupu mi</title>
+    </head>
+    <body>
+        {% block content %}{% endblock %}
+    </body>
+    </html>
 
 
 And our home page template extending it:

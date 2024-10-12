@@ -2,6 +2,7 @@ Testing Django data migrations
 ##############################
 
 :date: 2022-01-12
+:modified: 2024-10-12
 :tags: django, testing, migrations
 :has_code: true
 
@@ -183,6 +184,12 @@ you can use it in much the same way:
 
 So, get out there and test those data migrations.
 
+Addendum: I have now used `django-test-migrations`_ and it works well.
+It is, however, very slow. My current practice is to write data migrations,
+add tests for them, and then remove the code from the data migration and the
+test at the same time, and pretend they never existed, to keep the CI fast.
+I talk more about this in `Faster migration tests`_.
 
 .. _skipping migrations: https://docs.djangoproject.com/en/4.0/ref/settings/#migrate
 .. _django-test-migrations: https://github.com/wemake-services/django-test-migrations
+.. _Faster migration tests: {filename}../2024/faster-migration-tests.rst
