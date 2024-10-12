@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+      <meta charset="utf-8">
+    <title>Faster migration tests | Tom Carrick</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://carrick.eu/theme/images/logo.svg" rel="icon"type="image/svg+xml">
+      <link href="https://carrick.eu/theme/css/main.min.css?dabab4b3" rel="stylesheet">
+    <meta name="author" content="Tom Carrick">
+    <meta name="generator" content="Pelican">
+      <link
+        href="https://carrick.eu/feeds/all.atom.xml"
+        type="application/atom+xml"
+        rel="alternate"
+        title="Tom Carrick Full Atom Feed"
+      >
+    <meta property="og:site_name" content="Tom Carrick">
+    <meta property="og:locale" content="en_GB">
+
+      <meta property="og:image" content="https://carrick.eu/theme/images/logo.png">
+      <meta property="og:image:alt" content="Tom Carrick">
+      <meta property="og:image:width" content="300">
+      <meta property="og:image:height" content="300">
+      <meta name="twitter:image" content="https://carrick.eu/theme/images/logo.png">
+      <meta name="twitter:image:alt" content="Tom Carrick">
+      <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:creator" content="@knyghty">
+    <meta name="twitter:site" content="@knyghty">
+
+
+      <link href="https://carrick.eu/theme/css/pygments-default.min.css?6a4fb53a" rel="stylesheet">
+
+  <link href="https://carrick.eu/blog/faster-migration-tests/" rel="canonical">
+
+
+  <meta property="og:url" content="https://carrick.eu/blog/faster-migration-tests/">
+
+
+    <meta name="tags" content="django">
+    <meta name="tags" content="migrations">
+
+  <a class="skip-link" href='#main'>Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav>
+      <a href="https://carrick.eu/" class="home-link">
+        <svg
+          viewBox="0 0 90 90"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#9b59d0"
+          class="logo"
+          role="presentation"
+        >
+          <g class="t">
+            <rect width="74" height="16"></rect>
+            <rect x="31" height="90" width="16"></rect>
+          </g>
+          <g class="c">
+            <rect x="31" height="16" width="55"></rect>
+            <rect x="31" height="90" width="16"></rect>
+            <rect x="31" y="74" height="16" width="55"></rect>
+          </g>
+        </svg>
+        Home
+      </a>
+        <a href="https://carrick.eu/blog/">Blog</a>
+          <a href="https://carrick.eu/cv/">CV</a>
+          <a href="https://carrick.eu/about/">About</a>
+    </nav>
+  </header>
+  <main id="main">
+  <section class="content-area">
+    <header class="content-header">
+      <h1>Faster migration tests</h1>
+      Published: <time datetime="2024-10-12T00:00:00+02:00">12 October 2024</time>
+      
+    </header>
+
+    <div class="content">
+      <p>Almost invariably when I start to work at a new company, I look at their
+linting configuration and find something like this:</p>
+<div class="highlight"><pre><span></span><span class="k">[tool.coverage.run]</span>
+<span class="n">branch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">omit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;**/migrations/*&quot;</span><span class="p">]</span>
+
+<span class="k">[tool.ruff]</span>
+<span class="n">exclude</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;**/migrations/*&quot;</span><span class="p">]</span>
+</pre></div>
+<p>My suspicion about how prevalent this is is confirmed by GitHub Copilot
+suggesting it to me the instant I type <tt class="docutils literal">omit =</tt>.</p>
+<p>I guess there is a reason they are hiring me.</p>
+<p>It feels to me a lot like many people think migrations are just
+automatically generated nonsense to be hidden and never looked at again.
+I often see questions on the <a class="reference external" href="https://discord.gg/xcRH6mN4fa">Django Discord</a> about if you should commit
+migrations to your repository. If you're wondering, the answer is yes.
+I suspect that this isn't clear enough in the Django documentation.</p>
+<p>Migrations are code. They are often automatically generated, but not always.
+And in every case they should be read and understood, especially if you're
+interested in <a class="reference external" href="https://www.better-simple.com/django/2024/07/22/django-safemigrate/">zero-downtime deployments</a>. Even if you're not, why would you
+not care about understanding and testing code that is crucial to your next
+deployment and can easily bring your site down?
+How can you be reasonably sure it will work?</p>
+<p>So yes, please lint and format them. With modern tooling such as <a class="reference external" href="https://astral.sh/ruff">ruff</a>
+this is very easy. But I want to talk <a class="reference external" href="https://carrick.eu/blog/testing-django-data-migrations/">(again)</a> about testing them.</p>
+<p>In the previous article I outlined a way to test data migrations, and briefly
+mentioned a package that I haven't used. This package,
+<a class="reference external" href="https://github.com/wemake-services/django-test-migrations">django-test-migrations</a> is great. It solves a lot of edge cases you can run
+into when trying this yourself with the method I gave before.</p>
+<p>However, it's also very slow. Each test can take several seconds to run.
+For code that is only run once per environment, this seems a little overkill.
+I have a solution that I've been using for a while now. I wouldn't say I'm
+happy with it, but it works. I will call it &quot;pre-squashing&quot;, because that's
+the name that came to my head. I'm not sure if it's even a good name.</p>
+<p>For a simple data migration:</p>
+<div class="highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span class="normal"> 1</span>
+<span class="normal"> 2</span>
+<span class="normal"> 3</span>
+<span class="normal"> 4</span>
+<span class="normal"> 5</span>
+<span class="normal"> 6</span>
+<span class="normal"> 7</span>
+<span class="normal"> 8</span>
+<span class="normal"> 9</span>
+<span class="normal">10</span>
+<span class="normal">11</span></pre></div></td><td class="code"><div><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">migrations</span>
+
+
+<span class="k">def</span> <span class="nf">forwards_func</span><span class="p">(</span><span class="n">apps</span><span class="p">,</span> <span class="n">schema_editor</span><span class="p">):</span>
+    <span class="n">Thing</span> <span class="o">=</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s2">&quot;myapp&quot;</span><span class="p">,</span> <span class="s2">&quot;Thing&quot;</span><span class="p">)</span>
+    <span class="n">Thing</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">filter</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;default&quot;</span><span class="p">)</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">name</span><span class="o">=</span><span class="s2">&quot;Fancier default&quot;</span><span class="p">)</span>
+
+
+<span class="k">class</span> <span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="o">.</span><span class="n">Migration</span><span class="p">):</span>
+    <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;myapp&quot;</span><span class="p">,</span> <span class="s2">&quot;0001_initial&quot;</span><span class="p">)]</span>
+    <span class="n">operations</span> <span class="o">=</span> <span class="p">[</span><span class="n">migrations</span><span class="o">.</span><span class="n">RunPython</span><span class="p">(</span><span class="n">forwards_func</span><span class="p">)]</span>
+</pre></div></td></tr></table></div>
+<p>Now we need to write a test to cover lines 3 to 5. I'll leave this as an exercise
+for the reader. But after you've deployed your app to all deployments, we have
+this test that takes three seconds to run and doesn't really test anything
+relevant anymore. Three seconds is not too long, but when you have 10 of these,
+suddenly that's a lot of time added to your CI build.</p>
+<p>So once I am sure that the migration has ran across all deployments, I will
+pretend it never happened. I will remove the code in the migration so it looks
+like this:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">migrations</span>
+
+
+<span class="k">class</span> <span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="o">.</span><span class="n">Migration</span><span class="p">):</span>
+    <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;myapp&quot;</span><span class="p">,</span> <span class="s2">&quot;0001_initial&quot;</span><span class="p">)]</span>
+    <span class="n">operations</span> <span class="o">=</span> <span class="p">[]</span>
+</pre></div>
+<p>And at this point I will simply remove the test and pretend that never existed
+either.</p>
+<p>I wouldn't say it's an amazing solution. We lose a bit of history from our
+migrations, but I feel it's no worse than squashing migrations, and the
+history is still there in version control. But to me, it regains lost CI speed
+with little tangible downside.</p>
+<p>Maybe someone can tell me why this is a horrible idea 🙂.</p>
+
+    </div>
+
+    <footer class="content-footer">
+        <div class="tags">
+          Tags:
+            <a href="https://carrick.eu/blog/tags/django/">django</a>
+            <a href="https://carrick.eu/blog/tags/migrations/">migrations</a>
+        </div>
+    </footer>
+  </section>
+  </main>
+  <footer class="site-footer">
+    © Tom Carrick
+    <ul class="inline unstyled">
+      <li><a href="https://github.com/knyghty">GitHub</a></li>
+      <li><a href="https://twitter.com/knyghty">Twitter</a></li>
+    </ul>
+  </footer>
+  <script src="https://carrick.eu/theme/js/print.js"></script>
+</html>

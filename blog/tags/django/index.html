@@ -76,6 +76,33 @@
               <header>
                 <h1>
                   <a
+                    href="https://carrick.eu/blog/faster-migration-tests/"
+                    rel="bookmark"
+                    title="Permalink to Faster migration tests"
+                  >
+                    Faster migration tests
+                  </a>
+                </h1>
+                Published: <time datetime="2024-10-12T00:00:00+02:00">12 October 2024 </time>
+              </header>
+              <div><p>Almost invariably when I start to work at a new company, I look at their
+linting configuration and find something like this:</p>
+<div class="highlight"><pre><span></span><span class="k">[tool.coverage.run]</span>
+<span class="n">branch</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="kc">true</span>
+<span class="n">omit</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;**/migrations/*&quot;</span><span class="p">]</span>
+
+<span class="k">[tool.ruff]</span>
+<span class="n">exclude</span><span class="w"> </span><span class="o">=</span><span class="w"> </span><span class="p">[</span><span class="s2">&quot;**/migrations/*&quot;</span><span class="p">]</span>
+</pre></div>
+<p>My suspicion about how prevalent this is is confirmed by GitHub Copilot
+suggesting it to me the …</p></div>
+            </article>
+          </li>
+          <li>
+            <article>
+              <header>
+                <h1>
+                  <a
                     href="https://carrick.eu/blog/ensuring-a-block-is-overridden-in-a-django-template/"
                     rel="bookmark"
                     title="Permalink to Ensuring a block is overridden in a Django template"
@@ -104,6 +131,7 @@ And it's very tricky to spot this. Most …</p></div>
                   </a>
                 </h1>
                 Published: <time datetime="2022-01-12T00:00:00+01:00">12 January 2022 </time>
+                  | Updated: <time datetime="2024-10-12T00:00:00+02:00">12 October 2024</time>
               </header>
               <div><p>You probably already know the value of testing your code.
 Your Django migrations are code, therefore you should test them.

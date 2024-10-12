@@ -1,5 +1,94 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tom Carrick - migrations</title><link href="https://carrick.eu/" rel="alternate"></link><link href="https://carrick.eu/feeds/migrations.atom.xml" rel="self"></link><id>https://carrick.eu/</id><updated>2022-01-12T00:00:00+01:00</updated><entry><title>Testing Django data migrations</title><link href="https://carrick.eu/blog/testing-django-data-migrations/" rel="alternate"></link><published>2022-01-12T00:00:00+01:00</published><updated>2022-01-12T00:00:00+01:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2022-01-12:/blog/testing-django-data-migrations/</id><summary type="html">&lt;p&gt;You probably already know the value of testing your code.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tom Carrick - migrations</title><link href="https://carrick.eu/" rel="alternate"></link><link href="https://carrick.eu/feeds/migrations.atom.xml" rel="self"></link><id>https://carrick.eu/</id><updated>2024-10-12T00:00:00+02:00</updated><entry><title>Faster migration tests</title><link href="https://carrick.eu/blog/faster-migration-tests/" rel="alternate"></link><published>2024-10-12T00:00:00+02:00</published><updated>2024-10-12T00:00:00+02:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2024-10-12:/blog/faster-migration-tests/</id><summary type="html">&lt;p&gt;Almost invariably when I start to work at a new company, I look at their
+linting configuration and find something like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[tool.coverage.run]&lt;/span&gt;
+&lt;span class="n"&gt;branch&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;
+&lt;span class="n"&gt;omit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;**/migrations/*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="k"&gt;[tool.ruff]&lt;/span&gt;
+&lt;span class="n"&gt;exclude&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;**/migrations/*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;My suspicion about how prevalent this is is confirmed by GitHub Copilot
+suggesting it to me the …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Almost invariably when I start to work at a new company, I look at their
+linting configuration and find something like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="k"&gt;[tool.coverage.run]&lt;/span&gt;
+&lt;span class="n"&gt;branch&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="kc"&gt;true&lt;/span&gt;
+&lt;span class="n"&gt;omit&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;**/migrations/*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+
+&lt;span class="k"&gt;[tool.ruff]&lt;/span&gt;
+&lt;span class="n"&gt;exclude&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;**/migrations/*&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;My suspicion about how prevalent this is is confirmed by GitHub Copilot
+suggesting it to me the instant I type &lt;tt class="docutils literal"&gt;omit =&lt;/tt&gt;.&lt;/p&gt;
+&lt;p&gt;I guess there is a reason they are hiring me.&lt;/p&gt;
+&lt;p&gt;It feels to me a lot like many people think migrations are just
+automatically generated nonsense to be hidden and never looked at again.
+I often see questions on the &lt;a class="reference external" href="https://discord.gg/xcRH6mN4fa"&gt;Django Discord&lt;/a&gt; about if you should commit
+migrations to your repository. If you're wondering, the answer is yes.
+I suspect that this isn't clear enough in the Django documentation.&lt;/p&gt;
+&lt;p&gt;Migrations are code. They are often automatically generated, but not always.
+And in every case they should be read and understood, especially if you're
+interested in &lt;a class="reference external" href="https://www.better-simple.com/django/2024/07/22/django-safemigrate/"&gt;zero-downtime deployments&lt;/a&gt;. Even if you're not, why would you
+not care about understanding and testing code that is crucial to your next
+deployment and can easily bring your site down?
+How can you be reasonably sure it will work?&lt;/p&gt;
+&lt;p&gt;So yes, please lint and format them. With modern tooling such as &lt;a class="reference external" href="https://astral.sh/ruff"&gt;ruff&lt;/a&gt;
+this is very easy. But I want to talk &lt;a class="reference external" href="https://carrick.eu/blog/testing-django-data-migrations/"&gt;(again)&lt;/a&gt; about testing them.&lt;/p&gt;
+&lt;p&gt;In the previous article I outlined a way to test data migrations, and briefly
+mentioned a package that I haven't used. This package,
+&lt;a class="reference external" href="https://github.com/wemake-services/django-test-migrations"&gt;django-test-migrations&lt;/a&gt; is great. It solves a lot of edge cases you can run
+into when trying this yourself with the method I gave before.&lt;/p&gt;
+&lt;p&gt;However, it's also very slow. Each test can take several seconds to run.
+For code that is only run once per environment, this seems a little overkill.
+I have a solution that I've been using for a while now. I wouldn't say I'm
+happy with it, but it works. I will call it &amp;quot;pre-squashing&amp;quot;, because that's
+the name that came to my head. I'm not sure if it's even a good name.&lt;/p&gt;
+&lt;p&gt;For a simple data migration:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;table class="highlighttable"&gt;&lt;tr&gt;&lt;td class="linenos"&gt;&lt;div class="linenodiv"&gt;&lt;pre&gt;&lt;span class="normal"&gt; 1&lt;/span&gt;
+&lt;span class="normal"&gt; 2&lt;/span&gt;
+&lt;span class="normal"&gt; 3&lt;/span&gt;
+&lt;span class="normal"&gt; 4&lt;/span&gt;
+&lt;span class="normal"&gt; 5&lt;/span&gt;
+&lt;span class="normal"&gt; 6&lt;/span&gt;
+&lt;span class="normal"&gt; 7&lt;/span&gt;
+&lt;span class="normal"&gt; 8&lt;/span&gt;
+&lt;span class="normal"&gt; 9&lt;/span&gt;
+&lt;span class="normal"&gt;10&lt;/span&gt;
+&lt;span class="normal"&gt;11&lt;/span&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;td class="code"&gt;&lt;div&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.db&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;migrations&lt;/span&gt;
+
+
+&lt;span class="k"&gt;def&lt;/span&gt; &lt;span class="nf"&gt;forwards_func&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;apps&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="n"&gt;schema_editor&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;Thing&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="n"&gt;apps&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get_model&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;myapp&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;Thing&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+    &lt;span class="n"&gt;Thing&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;filter&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;update&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;name&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;Fancier default&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Migration&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;migrations&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Migration&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;dependencies&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;myapp&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0001_initial&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+    &lt;span class="n"&gt;operations&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[&lt;/span&gt;&lt;span class="n"&gt;migrations&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;RunPython&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;forwards_func&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/div&gt;
+&lt;p&gt;Now we need to write a test to cover lines 3 to 5. I'll leave this as an exercise
+for the reader. But after you've deployed your app to all deployments, we have
+this test that takes three seconds to run and doesn't really test anything
+relevant anymore. Three seconds is not too long, but when you have 10 of these,
+suddenly that's a lot of time added to your CI build.&lt;/p&gt;
+&lt;p&gt;So once I am sure that the migration has ran across all deployments, I will
+pretend it never happened. I will remove the code in the migration so it looks
+like this:&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;&lt;span class="kn"&gt;from&lt;/span&gt; &lt;span class="nn"&gt;django.db&lt;/span&gt; &lt;span class="kn"&gt;import&lt;/span&gt; &lt;span class="n"&gt;migrations&lt;/span&gt;
+
+
+&lt;span class="k"&gt;class&lt;/span&gt; &lt;span class="nc"&gt;Migration&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;migrations&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;Migration&lt;/span&gt;&lt;span class="p"&gt;):&lt;/span&gt;
+    &lt;span class="n"&gt;dependencies&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[(&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;myapp&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;,&lt;/span&gt; &lt;span class="s2"&gt;&amp;quot;0001_initial&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)]&lt;/span&gt;
+    &lt;span class="n"&gt;operations&lt;/span&gt; &lt;span class="o"&gt;=&lt;/span&gt; &lt;span class="p"&gt;[]&lt;/span&gt;
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;And at this point I will simply remove the test and pretend that never existed
+either.&lt;/p&gt;
+&lt;p&gt;I wouldn't say it's an amazing solution. We lose a bit of history from our
+migrations, but I feel it's no worse than squashing migrations, and the
+history is still there in version control. But to me, it regains lost CI speed
+with little tangible downside.&lt;/p&gt;
+&lt;p&gt;Maybe someone can tell me why this is a horrible idea 🙂.&lt;/p&gt;
+</content><category term="misc"></category><category term="django"></category><category term="migrations"></category></entry><entry><title>Testing Django data migrations</title><link href="https://carrick.eu/blog/testing-django-data-migrations/" rel="alternate"></link><published>2022-01-12T00:00:00+01:00</published><updated>2024-10-12T00:00:00+02:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2022-01-12:/blog/testing-django-data-migrations/</id><summary type="html">&lt;p&gt;You probably already know the value of testing your code.
 Your Django migrations are code, therefore you should test them.
 However, testing data migrations in particular can be tricky,
 and there's no documentation on how to do it.&lt;/p&gt;
@@ -150,6 +239,11 @@ you can use it in much the same way:&lt;/p&gt;
         &lt;span class="k"&gt;assert&lt;/span&gt; &lt;span class="n"&gt;User&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;objects&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;get&lt;/span&gt;&lt;span class="p"&gt;(&lt;/span&gt;&lt;span class="n"&gt;email&lt;/span&gt;&lt;span class="o"&gt;=&lt;/span&gt;&lt;span class="s2"&gt;&amp;quot;test123@example.com&amp;quot;&lt;/span&gt;&lt;span class="p"&gt;)&lt;/span&gt;&lt;span class="o"&gt;.&lt;/span&gt;&lt;span class="n"&gt;username&lt;/span&gt; &lt;span class="ow"&gt;is&lt;/span&gt; &lt;span class="kc"&gt;None&lt;/span&gt;
 &lt;/pre&gt;&lt;/div&gt;
 &lt;p&gt;So, get out there and test those data migrations.&lt;/p&gt;
+&lt;p&gt;Addendum: I have now used &lt;a class="reference external" href="https://github.com/wemake-services/django-test-migrations"&gt;django-test-migrations&lt;/a&gt; and it works well.
+It is, however, very slow. My current practice is to write data migrations,
+add tests for them, and then remove the code from the data migration and the
+test at the same time, and pretend they never existed, to keep the CI fast.
+I talk more about this in &lt;a class="reference external" href="https://carrick.eu/blog/faster-migration-tests/"&gt;Faster migration tests&lt;/a&gt;.&lt;/p&gt;
 &lt;/div&gt;
 &lt;/div&gt;
 </content><category term="misc"></category><category term="django"></category><category term="testing"></category><category term="migrations"></category></entry></feed>
