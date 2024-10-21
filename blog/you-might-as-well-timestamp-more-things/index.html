@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+      <meta charset="utf-8">
+    <title>You might as well timestamp more things | Tom Carrick</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://carrick.eu/theme/images/logo.svg" rel="icon"type="image/svg+xml">
+      <link href="https://carrick.eu/theme/css/main.min.css?dabab4b3" rel="stylesheet">
+    <meta name="author" content="Tom Carrick">
+    <meta name="generator" content="Pelican">
+      <link
+        href="https://carrick.eu/feeds/all.atom.xml"
+        type="application/atom+xml"
+        rel="alternate"
+        title="Tom Carrick Full Atom Feed"
+      >
+    <meta property="og:site_name" content="Tom Carrick">
+    <meta property="og:locale" content="en_GB">
+
+      <meta property="og:image" content="https://carrick.eu/theme/images/logo.png">
+      <meta property="og:image:alt" content="Tom Carrick">
+      <meta property="og:image:width" content="300">
+      <meta property="og:image:height" content="300">
+      <meta name="twitter:image" content="https://carrick.eu/theme/images/logo.png">
+      <meta name="twitter:image:alt" content="Tom Carrick">
+      <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:creator" content="@knyghty">
+    <meta name="twitter:site" content="@knyghty">
+
+
+      <link href="https://carrick.eu/theme/css/pygments-default.min.css?6a4fb53a" rel="stylesheet">
+
+  <link href="https://carrick.eu/blog/you-might-as-well-timestamp-more-things/" rel="canonical">
+
+
+  <meta property="og:url" content="https://carrick.eu/blog/you-might-as-well-timestamp-more-things/">
+
+
+    <meta name="tags" content="django">
+
+  <a class="skip-link" href='#main'>Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav>
+      <a href="https://carrick.eu/" class="home-link">
+        <svg
+          viewBox="0 0 90 90"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#9b59d0"
+          class="logo"
+          role="presentation"
+        >
+          <g class="t">
+            <rect width="74" height="16"></rect>
+            <rect x="31" height="90" width="16"></rect>
+          </g>
+          <g class="c">
+            <rect x="31" height="16" width="55"></rect>
+            <rect x="31" height="90" width="16"></rect>
+            <rect x="31" y="74" height="16" width="55"></rect>
+          </g>
+        </svg>
+        Home
+      </a>
+        <a href="https://carrick.eu/blog/">Blog</a>
+          <a href="https://carrick.eu/cv/">CV</a>
+          <a href="https://carrick.eu/about/">About</a>
+    </nav>
+  </header>
+  <main id="main">
+  <section class="content-area">
+    <header class="content-header">
+      <h1>You might as well timestamp more things</h1>
+      Published: <time datetime="2024-10-21T00:00:00+02:00">21 October 2024</time>
+      
+    </header>
+
+    <div class="content">
+      <p><a class="reference external" href="https://changelog.com/posts/you-might-as-well-timestamp-it">You might as well timestamp it</a> was a post doing the rounds a few years ago.
+It suggests using timestamps rather than booleans just to have the extra data
+point of when something happened.</p>
+<p>Lately I found myself in a different, but related situation. I had something
+like the following model:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+
+<span class="k">class</span> <span class="nc">Order</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Status</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+        <span class="n">PLACED</span> <span class="o">=</span> <span class="s2">&quot;placed&quot;</span><span class="p">,</span> <span class="s2">&quot;placed&quot;</span>
+        <span class="n">SHIPPED</span> <span class="o">=</span> <span class="s2">&quot;shipped&quot;</span><span class="p">,</span> <span class="s2">&quot;shipped&quot;</span>
+
+    <span class="o">...</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(</span><span class="n">choices</span><span class="o">=</span><span class="n">Status</span><span class="o">.</span><span class="n">choices</span><span class="p">,</span> <span class="n">db_default</span><span class="o">=</span><span class="n">Status</span><span class="o">.</span><span class="n">PLACED</span><span class="p">)</span>
+    <span class="n">date_ordered</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">db_default</span><span class="o">=</span><span class="n">Now</span><span class="p">())</span>
+    <span class="n">date_shipped</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+</pre></div>
+<p>I want to know the status of an order, and also the dates that these statuses
+were entered. It's a very simple type of state machine where there is only one
+direction of movement. It can go from placed to shipped, and that's all.
+If the status is more complex, it can go between states in different ways or
+multiple times, there are options such as audit logs, finite state machines,
+event sourcing, and maybe more I don't know about. But for this simple case,
+I'd rather avoid this extra complexity.</p>
+<p>However, there's still a bit of an issue here. What is the source of truth? Is
+it the status, or the dates? What if <tt class="docutils literal">date_shipped</tt> is set, but the status is
+set to <tt class="docutils literal">PLACED</tt>? All this gets messier if we were to add more statuses.
+It's likely users will want to know when their order is delivered, or they may
+want to cancel or return orders. There are several ways to solve this problem.</p>
+<p>One solution is to add a database constraint ensuring that the status matches
+up with the dates. This works quite well, though I find it slightly lacking in
+that you still have to make sure that you always change the status correctly
+when you change the dates, or you will hit a server error (or a validation
+error in the admin). We can do better, by only storing the timestamps and
+deriving the status from them, e.g.:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+
+
+<span class="k">class</span> <span class="nc">Order</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Status</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+        <span class="n">PLACED</span> <span class="o">=</span> <span class="s2">&quot;placed&quot;</span><span class="p">,</span> <span class="s2">&quot;placed&quot;</span>
+        <span class="n">SHIPPED</span> <span class="o">=</span> <span class="s2">&quot;shipped&quot;</span><span class="p">,</span> <span class="s2">&quot;shipped&quot;</span>
+
+    <span class="o">...</span>
+    <span class="n">date_ordered</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">db_default</span><span class="o">=</span><span class="n">Now</span><span class="p">())</span>
+    <span class="n">date_shipped</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+
+    <span class="nd">@property</span>
+    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+        <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">date_shipped</span><span class="p">:</span>
+            <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">SHIPPED</span>
+        <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">PLACED</span>
+</pre></div>
+<p>However, it's now much more annoying to query by status, filter in the admin,
+etc. We need to reproduce the logic every time. And it's likely pretty tough
+to index well for every case, especially once we add more fields, so you might
+end up with some slow queries.</p>
+<p>Luckily the Django 5.0 release was near when I was thinking about this
+problem, and the new <a class="reference external" href="https://docs.djangoproject.com/en/dev/ref/models/fields/#generatedfield">GeneratedField</a> turned out to be just what I needed.
+With it, we can move this logic into the database:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">Case</span><span class="p">,</span> <span class="n">When</span><span class="p">,</span> <span class="n">Value</span>
+
+
+<span class="k">class</span> <span class="nc">Order</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span> <span class="nc">Status</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+        <span class="n">PLACED</span> <span class="o">=</span> <span class="s2">&quot;placed&quot;</span><span class="p">,</span> <span class="s2">&quot;placed&quot;</span>
+        <span class="n">SHIPPED</span> <span class="o">=</span> <span class="s2">&quot;shipped&quot;</span><span class="p">,</span> <span class="s2">&quot;shipped&quot;</span>
+
+    <span class="o">...</span>
+    <span class="n">date_ordered</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">db_default</span><span class="o">=</span><span class="n">Now</span><span class="p">())</span>
+    <span class="n">date_shipped</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
+    <span class="n">status</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">GeneratedField</span><span class="p">(</span>
+        <span class="n">db_persist</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span>
+        <span class="n">output_field</span><span class="o">=</span><span class="n">models</span><span class="o">.</span><span class="n">CharField</span><span class="p">(),</span>
+        <span class="n">choices</span><span class="o">=</span><span class="n">Status</span><span class="p">,</span>
+        <span class="n">expression</span><span class="o">=</span><span class="p">(</span>
+            <span class="n">Case</span><span class="p">(</span>
+                <span class="n">When</span><span class="p">(</span><span class="n">date_shipped__isnull</span><span class="o">=</span><span class="kc">False</span><span class="p">,</span> <span class="n">then</span><span class="o">=</span><span class="n">Value</span><span class="p">(</span><span class="n">Status</span><span class="o">.</span><span class="n">SHIPPED</span><span class="p">)),</span>
+                <span class="n">default</span><span class="o">=</span><span class="n">Value</span><span class="p">(</span><span class="n">Status</span><span class="o">.</span><span class="n">PLACED</span><span class="p">),</span>
+            <span class="p">)</span>
+        <span class="p">),</span>
+    <span class="p">)</span>
+</pre></div>
+<p>Our new status field will always be correct, as it's derived from the dates.
+We can also query it in a very simple way, and admin filters will just work.
+As it's persisted to the database, we can index it easily, so these queries
+can be fast. Adding new statuses is fairly straightforward, just add a new
+choice, <tt class="docutils literal">DateTimeField</tt>, and a clause to the <tt class="docutils literal">GeneratedField</tt> expression.
+Everything in one place, and all we need to do to change status is to set the
+right <tt class="docutils literal">DateTimeField</tt>.</p>
+<p>The one remaining problem is that the dates can still be inconsistent.
+For example, nothing is stopping you from having an order that has been
+delivered but not shipped. This can be fixed with database constraints, but
+I'll leave that as an exercise for the reader. I imagine it's also possible to
+define some kind of finite state machine schema and automatically generate
+the <tt class="docutils literal">GeneratedField</tt> and constraints, but that one is also definitely an
+exercise for the reader.</p>
+<p>It's been suggested that you might as well timestamp your booleans. I
+wouldn't go so far as to suggesting that you also timestamp your status fields,
+but if you need to, this feels like a pretty good way to do it.</p>
+
+    </div>
+
+    <footer class="content-footer">
+        <div class="tags">
+          Tags:
+            <a href="https://carrick.eu/blog/tags/django/">django</a>
+        </div>
+    </footer>
+  </section>
+  </main>
+  <footer class="site-footer">
+    © Tom Carrick
+    <ul class="inline unstyled">
+      <li><a href="https://github.com/knyghty">GitHub</a></li>
+      <li><a href="https://twitter.com/knyghty">Twitter</a></li>
+    </ul>
+  </footer>
+  <script src="https://carrick.eu/theme/js/print.js"></script>
+</html>
