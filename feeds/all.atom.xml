@@ -1,5 +1,76 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tom Carrick</title><link href="https://carrick.eu/" rel="alternate"></link><link href="https://carrick.eu/feeds/all.atom.xml" rel="self"></link><id>https://carrick.eu/</id><updated>2024-10-21T00:00:00+02:00</updated><entry><title>You might as well timestamp more things</title><link href="https://carrick.eu/blog/you-might-as-well-timestamp-more-things/" rel="alternate"></link><published>2024-10-21T00:00:00+02:00</published><updated>2024-10-21T00:00:00+02:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2024-10-21:/blog/you-might-as-well-timestamp-more-things/</id><summary type="html">&lt;p&gt;&lt;a class="reference external" href="https://changelog.com/posts/you-might-as-well-timestamp-it"&gt;You might as well timestamp it&lt;/a&gt; was a post doing the rounds a few years ago.
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tom Carrick</title><link href="https://carrick.eu/" rel="alternate"></link><link href="https://carrick.eu/feeds/all.atom.xml" rel="self"></link><id>https://carrick.eu/</id><updated>2024-10-26T00:00:00+02:00</updated><entry><title>What to do with django.contrib?</title><link href="https://carrick.eu/blog/what-to-do-with-djangocontrib/" rel="alternate"></link><published>2024-10-26T00:00:00+02:00</published><updated>2024-10-26T00:00:00+02:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2024-10-26:/blog/what-to-do-with-djangocontrib/</id><summary type="html">&lt;p&gt;Recently, Andrew Miller, also known as nanorepublica on Discord and through his
+consultancy, Software Crafts, recently wrote &lt;a class="reference external" href="https://softwarecrafts.co.uk/100-words/day-198"&gt;a blog post on django.contrib&lt;/a&gt;
+and another on &lt;a class="reference external" href="https://softwarecrafts.co.uk/100-words/day-199"&gt;its future&lt;/a&gt;. I'm not sure how I feel about Mr. Miller's
+suggestions, but I do agree with him that it's quite confusing and does …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Recently, Andrew Miller, also known as nanorepublica on Discord and through his
+consultancy, Software Crafts, recently wrote &lt;a class="reference external" href="https://softwarecrafts.co.uk/100-words/day-198"&gt;a blog post on django.contrib&lt;/a&gt;
+and another on &lt;a class="reference external" href="https://softwarecrafts.co.uk/100-words/day-199"&gt;its future&lt;/a&gt;. I'm not sure how I feel about Mr. Miller's
+suggestions, but I do agree with him that it's quite confusing and does raise
+some questions.&lt;/p&gt;
+&lt;p&gt;I will first answer Mr. Republica's fourth question: &amp;quot;What is the meaning of
+&lt;tt class="docutils literal"&gt;contrib&lt;/tt&gt; with in Django?&amp;quot;&lt;/p&gt;
+&lt;div class="section" id="what-is-contrib-for"&gt;
+&lt;h2&gt;What is &lt;tt class="docutils literal"&gt;contrib&lt;/tt&gt; for?&lt;/h2&gt;
+&lt;p&gt;This is answered clearly by the &lt;a class="reference external" href="https://docs.djangoproject.com/en/5.1/ref/contrib/"&gt;contrib reference docs&lt;/a&gt;, they are optional
+extra batteries included in Django.&lt;/p&gt;
+&lt;p&gt;Optional, you say? Let's have a look at a few of the things in &lt;tt class="docutils literal"&gt;contrib&lt;/tt&gt;.&lt;/p&gt;
+&lt;div class="section" id="admin-and-admindocs"&gt;
+&lt;h3&gt;&lt;tt class="docutils literal"&gt;admin&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;admindocs&lt;/tt&gt;&lt;/h3&gt;
+&lt;p&gt;The admin has been called Django's killer app. It's optional, but I'm not sure
+I've ever spun up a project without it.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="auth-and-sessions"&gt;
+&lt;h3&gt;&lt;tt class="docutils literal"&gt;auth&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;sessions&lt;/tt&gt;&lt;/h3&gt;
+&lt;p&gt;Not every project needs auth, but almost all do, and it's required for
+the admin. Django is supposed to be &amp;quot;secure by default&amp;quot;. I suppose by not
+allowing anyone to login, you are quite secure, but I feel that's taking things
+a bit too far.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="contenttypes"&gt;
+&lt;h3&gt;&lt;tt class="docutils literal"&gt;contenttypes&lt;/tt&gt;&lt;/h3&gt;
+&lt;p&gt;Here's one I really take issue with. It's used in a lot of places.
+Okay, if I never use generic foreign keys I suppose it's optional, but if core
+parts of Django are calling into it, that doesn't seem right to me.&lt;/p&gt;
+&lt;p&gt;It's also used by the admin, and by &lt;tt class="docutils literal"&gt;contrib.auth&lt;/tt&gt;.&lt;/p&gt;
+&lt;/div&gt;
+&lt;div class="section" id="messages"&gt;
+&lt;h3&gt;&lt;tt class="docutils literal"&gt;messages&lt;/tt&gt;&lt;/h3&gt;
+&lt;p&gt;Optional for sure, but used heavily in the admin.&lt;/p&gt;
+&lt;hr class="docutils" /&gt;
+&lt;p&gt;Many of the others I don't take much issue with fundamentally. But I'm not sure
+they need to be bundled into this namespace that isn't really what the name
+implies it is.&lt;/p&gt;
+&lt;/div&gt;
+&lt;/div&gt;
+&lt;div class="section" id="the-future"&gt;
+&lt;h2&gt;The future&lt;/h2&gt;
+&lt;p&gt;Now I'd like to address Mr. Craft's questions five through eight.
+At the very least, I suggest moving the above packages up a level.
+We would have &lt;tt class="docutils literal"&gt;django.admin&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;django.admin.docs&lt;/tt&gt;, not
+&lt;tt class="docutils literal"&gt;django.contrib.admin&lt;/tt&gt; and &lt;tt class="docutils literal"&gt;django.contrib.admindocs&lt;/tt&gt;. We'd need a
+(possibly extended or forever)  deprecation period of course, but I think it
+sends the right message about these apps.&lt;/p&gt;
+&lt;p&gt;For the others, such as &lt;tt class="docutils literal"&gt;flatpages&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;sitemaps&lt;/tt&gt;, and so on, I am less
+certain. Possibly they don't need to be directly under the &lt;tt class="docutils literal"&gt;django&lt;/tt&gt;
+namespace (but also, why not?). &lt;tt class="docutils literal"&gt;humanize&lt;/tt&gt; could easily go in with the rest
+of the built in template tags. In any case &lt;tt class="docutils literal"&gt;contrib&lt;/tt&gt; still feels like a
+misnomer to me.&lt;/p&gt;
+&lt;p&gt;I would also point out that many things in &amp;quot;core&amp;quot; Django are perfectly
+optional. Even the ORM needn't be used. But smaller things, such as pagination
+live in core but often go unused, and aren't used by other core parts of
+Django.&lt;/p&gt;
+&lt;p&gt;One other personal problem with &lt;tt class="docutils literal"&gt;contrib&lt;/tt&gt; is that every time I type it, I
+type it as &lt;tt class="docutils literal"&gt;contrub&lt;/tt&gt;. I have no idea why, but nuking it would be nice.&lt;/p&gt;
+&lt;p&gt;We already seem to be starting on a trajectory of not putting things into
+&lt;tt class="docutils literal"&gt;contrib&lt;/tt&gt;. During all the discussion of &lt;a class="reference external" href="https://github.com/django/deps/blob/main/accepted/0014-background-workers.rst"&gt;django-tasks&lt;/a&gt;, it seems like a
+given that it will land as &lt;tt class="docutils literal"&gt;django.tasks&lt;/tt&gt; rather than
+&lt;tt class="docutils literal"&gt;django.contrib.tasks&lt;/tt&gt; despite it clearly being an optional battery, and one
+that will probably see less use than &lt;tt class="docutils literal"&gt;contrib.admin&lt;/tt&gt;. Personally, I am
+fully on board with this, but now &lt;tt class="docutils literal"&gt;contrib.admin&lt;/tt&gt; makes little sense.&lt;/p&gt;
+&lt;p&gt;And &lt;tt class="docutils literal"&gt;django.core&lt;/tt&gt;, don't think you are getting away unscathed. why not simply
+&lt;tt class="docutils literal"&gt;django.cache&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;django.checks&lt;/tt&gt;, &lt;tt class="docutils literal"&gt;django.management&lt;/tt&gt;, etc?&lt;/p&gt;
+&lt;/div&gt;
+</content><category term="misc"></category><category term="django"></category></entry><entry><title>You might as well timestamp more things</title><link href="https://carrick.eu/blog/you-might-as-well-timestamp-more-things/" rel="alternate"></link><published>2024-10-21T00:00:00+02:00</published><updated>2024-10-21T00:00:00+02:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2024-10-21:/blog/you-might-as-well-timestamp-more-things/</id><summary type="html">&lt;p&gt;&lt;a class="reference external" href="https://changelog.com/posts/you-might-as-well-timestamp-it"&gt;You might as well timestamp it&lt;/a&gt; was a post doing the rounds a few years ago.
 It suggests using timestamps rather than booleans just to have the extra data
 point of when something happened.&lt;/p&gt;
 &lt;p&gt;Lately I found myself in a different, but related situation. I had something

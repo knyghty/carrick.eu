@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+      <meta charset="utf-8">
+    <title>What to do with django.contrib? | Tom Carrick</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://carrick.eu/theme/images/logo.svg" rel="icon"type="image/svg+xml">
+      <link href="https://carrick.eu/theme/css/main.min.css?dabab4b3" rel="stylesheet">
+    <meta name="author" content="Tom Carrick">
+    <meta name="generator" content="Pelican">
+      <link
+        href="https://carrick.eu/feeds/all.atom.xml"
+        type="application/atom+xml"
+        rel="alternate"
+        title="Tom Carrick Full Atom Feed"
+      >
+    <meta property="og:site_name" content="Tom Carrick">
+    <meta property="og:locale" content="en_GB">
+
+      <meta property="og:image" content="https://carrick.eu/theme/images/logo.png">
+      <meta property="og:image:alt" content="Tom Carrick">
+      <meta property="og:image:width" content="300">
+      <meta property="og:image:height" content="300">
+      <meta name="twitter:image" content="https://carrick.eu/theme/images/logo.png">
+      <meta name="twitter:image:alt" content="Tom Carrick">
+      <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:creator" content="@knyghty">
+    <meta name="twitter:site" content="@knyghty">
+
+
+
+  <link href="https://carrick.eu/blog/what-to-do-with-djangocontrib/" rel="canonical">
+
+
+  <meta property="og:url" content="https://carrick.eu/blog/what-to-do-with-djangocontrib/">
+
+
+    <meta name="tags" content="django">
+
+  <a class="skip-link" href='#main'>Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav>
+      <a href="https://carrick.eu/" class="home-link">
+        <svg
+          viewBox="0 0 90 90"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#9b59d0"
+          class="logo"
+          role="presentation"
+        >
+          <g class="t">
+            <rect width="74" height="16"></rect>
+            <rect x="31" height="90" width="16"></rect>
+          </g>
+          <g class="c">
+            <rect x="31" height="16" width="55"></rect>
+            <rect x="31" height="90" width="16"></rect>
+            <rect x="31" y="74" height="16" width="55"></rect>
+          </g>
+        </svg>
+        Home
+      </a>
+        <a href="https://carrick.eu/blog/">Blog</a>
+          <a href="https://carrick.eu/cv/">CV</a>
+          <a href="https://carrick.eu/about/">About</a>
+    </nav>
+  </header>
+  <main id="main">
+  <section class="content-area">
+    <header class="content-header">
+      <h1>What to do with django.contrib?</h1>
+      Published: <time datetime="2024-10-26T00:00:00+02:00">26 October 2024</time>
+      
+    </header>
+
+    <div class="content">
+      <p>Recently, Andrew Miller, also known as nanorepublica on Discord and through his
+consultancy, Software Crafts, recently wrote <a class="reference external" href="https://softwarecrafts.co.uk/100-words/day-198">a blog post on django.contrib</a>
+and another on <a class="reference external" href="https://softwarecrafts.co.uk/100-words/day-199">its future</a>. I'm not sure how I feel about Mr. Miller's
+suggestions, but I do agree with him that it's quite confusing and does raise
+some questions.</p>
+<p>I will first answer Mr. Republica's fourth question: &quot;What is the meaning of
+<tt class="docutils literal">contrib</tt> with in Django?&quot;</p>
+<div class="section" id="what-is-contrib-for">
+<h2>What is <tt class="docutils literal">contrib</tt> for?</h2>
+<p>This is answered clearly by the <a class="reference external" href="https://docs.djangoproject.com/en/5.1/ref/contrib/">contrib reference docs</a>, they are optional
+extra batteries included in Django.</p>
+<p>Optional, you say? Let's have a look at a few of the things in <tt class="docutils literal">contrib</tt>.</p>
+<div class="section" id="admin-and-admindocs">
+<h3><tt class="docutils literal">admin</tt> and <tt class="docutils literal">admindocs</tt></h3>
+<p>The admin has been called Django's killer app. It's optional, but I'm not sure
+I've ever spun up a project without it.</p>
+</div>
+<div class="section" id="auth-and-sessions">
+<h3><tt class="docutils literal">auth</tt> and <tt class="docutils literal">sessions</tt></h3>
+<p>Not every project needs auth, but almost all do, and it's required for
+the admin. Django is supposed to be &quot;secure by default&quot;. I suppose by not
+allowing anyone to login, you are quite secure, but I feel that's taking things
+a bit too far.</p>
+</div>
+<div class="section" id="contenttypes">
+<h3><tt class="docutils literal">contenttypes</tt></h3>
+<p>Here's one I really take issue with. It's used in a lot of places.
+Okay, if I never use generic foreign keys I suppose it's optional, but if core
+parts of Django are calling into it, that doesn't seem right to me.</p>
+<p>It's also used by the admin, and by <tt class="docutils literal">contrib.auth</tt>.</p>
+</div>
+<div class="section" id="messages">
+<h3><tt class="docutils literal">messages</tt></h3>
+<p>Optional for sure, but used heavily in the admin.</p>
+<hr class="docutils" />
+<p>Many of the others I don't take much issue with fundamentally. But I'm not sure
+they need to be bundled into this namespace that isn't really what the name
+implies it is.</p>
+</div>
+</div>
+<div class="section" id="the-future">
+<h2>The future</h2>
+<p>Now I'd like to address Mr. Craft's questions five through eight.
+At the very least, I suggest moving the above packages up a level.
+We would have <tt class="docutils literal">django.admin</tt> and <tt class="docutils literal">django.admin.docs</tt>, not
+<tt class="docutils literal">django.contrib.admin</tt> and <tt class="docutils literal">django.contrib.admindocs</tt>. We'd need a
+(possibly extended or forever)  deprecation period of course, but I think it
+sends the right message about these apps.</p>
+<p>For the others, such as <tt class="docutils literal">flatpages</tt>, <tt class="docutils literal">sitemaps</tt>, and so on, I am less
+certain. Possibly they don't need to be directly under the <tt class="docutils literal">django</tt>
+namespace (but also, why not?). <tt class="docutils literal">humanize</tt> could easily go in with the rest
+of the built in template tags. In any case <tt class="docutils literal">contrib</tt> still feels like a
+misnomer to me.</p>
+<p>I would also point out that many things in &quot;core&quot; Django are perfectly
+optional. Even the ORM needn't be used. But smaller things, such as pagination
+live in core but often go unused, and aren't used by other core parts of
+Django.</p>
+<p>One other personal problem with <tt class="docutils literal">contrib</tt> is that every time I type it, I
+type it as <tt class="docutils literal">contrub</tt>. I have no idea why, but nuking it would be nice.</p>
+<p>We already seem to be starting on a trajectory of not putting things into
+<tt class="docutils literal">contrib</tt>. During all the discussion of <a class="reference external" href="https://github.com/django/deps/blob/main/accepted/0014-background-workers.rst">django-tasks</a>, it seems like a
+given that it will land as <tt class="docutils literal">django.tasks</tt> rather than
+<tt class="docutils literal">django.contrib.tasks</tt> despite it clearly being an optional battery, and one
+that will probably see less use than <tt class="docutils literal">contrib.admin</tt>. Personally, I am
+fully on board with this, but now <tt class="docutils literal">contrib.admin</tt> makes little sense.</p>
+<p>And <tt class="docutils literal">django.core</tt>, don't think you are getting away unscathed. why not simply
+<tt class="docutils literal">django.cache</tt>, <tt class="docutils literal">django.checks</tt>, <tt class="docutils literal">django.management</tt>, etc?</p>
+</div>
+
+    </div>
+
+    <footer class="content-footer">
+        <div class="tags">
+          Tags:
+            <a href="https://carrick.eu/blog/tags/django/">django</a>
+        </div>
+    </footer>
+  </section>
+  </main>
+  <footer class="site-footer">
+    © Tom Carrick
+    <ul class="inline unstyled">
+      <li><a href="https://github.com/knyghty">GitHub</a></li>
+      <li><a href="https://twitter.com/knyghty">Twitter</a></li>
+    </ul>
+  </footer>
+  <script src="https://carrick.eu/theme/js/print.js"></script>
+</html>
