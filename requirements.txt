@@ -32,9 +32,9 @@ blacken-docs==1.19.1 \
     --hash=sha256:3cf7a10f5b87886683e3ab07a0dc17de41425f3d21e2948e59f1c6079c45b328 \
     --hash=sha256:73c3dee042a28f2d4f7df6e2c340869d6ced9704f6174d035d9b6199567f890d
     # via carrick-eu (pyproject.toml)
-blinker==1.8.2 \
-    --hash=sha256:1779309f71bf239144b9399d06ae925637cf6634cf6bd131104184531bf67c01 \
-    --hash=sha256:8f77b09d3bf7c795e969e9486f39c2c5e9c39d4ee07424be2bc594ece9642d83
+blinker==1.9.0 \
+    --hash=sha256:b4ce2265a7abece45e7cc896e98dbebe6cead56bcf805a3d23136d145f5445bf \
+    --hash=sha256:ba0efaa9080b619ff2f3459d1d500c57bddea4a6b424b60a91141db6fd2f08bc
     # via pelican
 click==8.1.7 \
     --hash=sha256:ae74fb96c20a0277a1d615f1e4d73c8414f5a98db8b799a7931d1582f3390c28 \
@@ -135,9 +135,9 @@ ordered-set==4.1.0 \
     --hash=sha256:046e1132c71fcf3330438a539928932caf51ddbc582496833e23de611de14562 \
     --hash=sha256:694a8e44c87657c59292ede72891eb91d34131f6531463aab3009191c77364a8
     # via pelican
-packaging==24.1 \
-    --hash=sha256:026ed72c8ed3fcce5bf8950572258698927fd1dbda10a5e981cdf0ac37f4f002 \
-    --hash=sha256:5b8f2217dbdbd2f7f384c41c628544e6d52f2d0f53c6d0c3ea61aa5d1d7ff124
+packaging==24.2 \
+    --hash=sha256:09abb1bccd265c01f4a3aa3f7a7db064b36514d2cba19a2f694fe6150451a759 \
+    --hash=sha256:c228a6dc5e932d346bc5739379109d49e8853dd8223571c7c5b55260edc0b97f
     # via black
 pathspec==0.12.1 \
     --hash=sha256:a0d503e138a4c123b27490a4f7beda6a01c6f288df0e4a8b79c7eb0dc7b4cc08 \
@@ -150,9 +150,9 @@ pelican==4.10.1 \
     #   carrick-eu (pyproject.toml)
     #   pelican-sitemap
     #   pelican-webassets
-pelican-sitemap==1.1.0 \
-    --hash=sha256:bc069d8f89a9d544f6c6941731dc91bd53c89f549a31974eca25f3294b343d9e \
-    --hash=sha256:d4bd8dfbdc8d778c23a293fbcfd4c19ccd44353ae3d263b8be74a6a2368cd9ab
+pelican-sitemap==1.2.0 \
+    --hash=sha256:9e5bba7c98bae8e0e94c8fa72bbc49673ceaed5c5bb934e23d675572572a9fb2 \
+    --hash=sha256:d4016c9ebdf4bd87776f48fd5a36f9c3af1c3bca01cda22a83c840c9669df7e1
     # via carrick-eu (pyproject.toml)
 pelican-webassets==2.1.0 \
     --hash=sha256:0a418b88ebd6d96efae4d666394552bcacc8d30d2f0abb5bb4db26064e8cfed0 \
