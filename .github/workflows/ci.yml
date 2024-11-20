@@ -17,15 +17,15 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           cache: pip
-          python-version: "3.12"
+          python-version-file: pyproject.toml
       - name: Install uv
         run: pip install uv
       - name: Install dependencies
-        run: uv pip install --system -r requirements.txt
+        run: uv sync
       - name: Install clean-css
         run: npm install -g clean-css-cli
       - name: Build site
-        run: pelican content -s publishconf.py
+        run: uv run pelican content -s publishconf.py
       - name: Clean up
         run: rm -r output/theme/.webassets-cache
       - uses: JamesIves/github-pages-deploy-action@v4.6.9

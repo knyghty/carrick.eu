@@ -5,16 +5,18 @@ dependencies = [
     "pelican",
     "pelican-sitemap",
     "pelican-webassets",
+    "pre-commit",
     "pygments",
 ]
 name = "carrick-eu"
 version = "0"
+requires-python = "~=3.13"
 
 [project.optional-dependencies]
 dev = ["pre-commit", "rstcheck"]
 
 [tool.ruff]
-target-version = "py312"
+target-version = "py313"
 
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "W"]
