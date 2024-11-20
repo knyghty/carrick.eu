@@ -1,5 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tom Carrick - django</title><link href="https://carrick.eu/" rel="alternate"></link><link href="https://carrick.eu/feeds/django.atom.xml" rel="self"></link><id>https://carrick.eu/</id><updated>2024-10-26T00:00:00+02:00</updated><entry><title>What to do with django.contrib?</title><link href="https://carrick.eu/blog/what-to-do-with-djangocontrib/" rel="alternate"></link><published>2024-10-26T00:00:00+02:00</published><updated>2024-10-26T00:00:00+02:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2024-10-26:/blog/what-to-do-with-djangocontrib/</id><summary type="html">&lt;p&gt;Recently, Andrew Miller, also known as nanorepublica on Discord and through his
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tom Carrick - django</title><link href="https://carrick.eu/" rel="alternate"></link><link href="https://carrick.eu/feeds/django.atom.xml" rel="self"></link><id>https://carrick.eu/</id><updated>2024-11-20T00:00:00+01:00</updated><entry><title>Ramblings on the 2025 DSF Board elections</title><link href="https://carrick.eu/blog/ramblings-on-the-2025-dsf-board-elections/" rel="alternate"></link><published>2024-11-20T00:00:00+01:00</published><updated>2024-11-20T00:00:00+01:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2024-11-20:/blog/ramblings-on-the-2025-dsf-board-elections/</id><summary type="html">&lt;p&gt;I'd love to say I'm writing this a few days late because I've been thinking carefully
+about what to say. Sadly not, this will be as off the cuff as ever.&lt;/p&gt;
+&lt;p&gt;It was an interesting election this year. There were four seats up for grabs, and
+three of the four …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I'd love to say I'm writing this a few days late because I've been thinking carefully
+about what to say. Sadly not, this will be as off the cuff as ever.&lt;/p&gt;
+&lt;p&gt;It was an interesting election this year. There were four seats up for grabs, and
+three of the four incumbents decided not to run. The first thing I want to do is
+thank them for this, as it's allowed space for some new faces on the board. Though
+I'm not sure how well the incumbents would have done, since the one who did run
+didn't get re-elected.&lt;/p&gt;
+&lt;p&gt;The first thing I notice about the newly elected members, relative to the rest of
+the field is that they are the most well-known names. The only person I hadn't
+really heard of was &lt;a class="reference external" href="https://www.linkedin.com/in/abigail-afi-gbadago/"&gt;Afi&lt;/a&gt; until the ever-gregarious &lt;a class="reference external" href="https://sarahabd.com/"&gt;Sarah Abderemane&lt;/a&gt; clued me into
+who she is. And now I'm looking forward to working with her and the rest of the board.&lt;/p&gt;
+&lt;p&gt;I don't think it's a bad thing that the most well-known people won. They're well-known
+for a reason after all, there is little doubt of their sustained dedication. And I feel
+this is the most important characteristic of any board member.&lt;/p&gt;
+&lt;p&gt;I also wanted to address my own, personal goals for the board in the two year term I've
+been elected for. Some people came to me and told me that they thought my pitch was a
+bit too technical. I'm inclined to reject this as this is a technical project. What
+are the goals of the board if not to support the technical (and non-technical) success
+of Django? Still, I have my own doubts about my ability to contribute in the
+non-technical ways required. A case of imposter syndrome, I'm hoping 🙂&lt;/p&gt;
+&lt;p&gt;I also think my pitch was quite populist, but hey, it worked for &lt;a class="reference external" href="https://thib.me/"&gt;Thibaud&lt;/a&gt; in the
+previous year. Though really it's the end of the pitch that's important. Yes I want
+all these fancy things for the framework to ensure it's sustained success. The path to
+that is clear to me:&lt;/p&gt;
+&lt;p&gt;We need an executive director. This was mentioned by a lot of candidates. Not by
+myself, ironically, though it was supposed to be implied. The truth is that the board
+is juggling work, life, other open source contributions, and Django can only be a part
+of that. By paying someone, we unlock someone's time that we just don't have right now.
+I can't speak for others, but for myself, fundraising is not something I have any idea
+how to do. It's just not in my bones. Having an ED means we have someone with both
+the time and the skills to do this much more effectively than we can with volunteers.
+I'm happy to see that the board seems fairly aligned on making this happen.&lt;/p&gt;
+&lt;p&gt;The second thing is to use all this newly raised money to pay for fellows that can
+not only tread the water of triage, reviewing, merging and releasing, but actively
+spend time developing new features.&lt;/p&gt;
+&lt;p&gt;I could ramble more but I have my own things to juggle.&lt;/p&gt;
+&lt;p&gt;I will leave with thanking all the candidates that ran. I am a bit wary of mentioning
+specific names, because I know I will leave people out, but I'm going to do it anyway.
+I want to especially encourage Lilian and Priya to run again, and I single you both out
+only because I don't talk to you much elsewhere. For anyone else I do talk to, you
+should already know this 🙂&lt;/p&gt;
+</content><category term="misc"></category><category term="django"></category></entry><entry><title>What to do with django.contrib?</title><link href="https://carrick.eu/blog/what-to-do-with-djangocontrib/" rel="alternate"></link><published>2024-10-26T00:00:00+02:00</published><updated>2024-10-26T00:00:00+02:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2024-10-26:/blog/what-to-do-with-djangocontrib/</id><summary type="html">&lt;p&gt;Recently, Andrew Miller, also known as nanorepublica on Discord and through his
 consultancy, Software Crafts, recently wrote &lt;a class="reference external" href="https://softwarecrafts.co.uk/100-words/day-198"&gt;a blog post on django.contrib&lt;/a&gt;
 and another on &lt;a class="reference external" href="https://softwarecrafts.co.uk/100-words/day-199"&gt;its future&lt;/a&gt;. I'm not sure how I feel about Mr. Miller's
 suggestions, but I do agree with him that it's quite confusing and does …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Recently, Andrew Miller, also known as nanorepublica on Discord and through his
