@@ -31,7 +31,7 @@ to start from. But which one? Both, obviously. Just ask the user.
 
 Not too bad. If you like this idea, do please comment on the `draft DEP`_.
 
-I promised too features, though. The second one is simple, and I'm `not the only one`_
+I promised two features, though. The second one is simple, and I'm `not the only one`_
 to have thought of it. Rename ``django-admin`` to ``django`` and alias ``django-admin``
 to it. How do you start a new Django project? Easy, ``django new``.
 
