@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<feed xmlns="http://www.w3.org/2005/Atom"><title>Tom Carrick - django</title><link href="https://carrick.eu/" rel="alternate"></link><link href="https://carrick.eu/feeds/django.atom.xml" rel="self"></link><id>https://carrick.eu/</id><updated>2024-11-20T00:00:00+01:00</updated><entry><title>Ramblings on the 2025 DSF Board elections</title><link href="https://carrick.eu/blog/ramblings-on-the-2025-dsf-board-elections/" rel="alternate"></link><published>2024-11-20T00:00:00+01:00</published><updated>2024-11-20T00:00:00+01:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2024-11-20:/blog/ramblings-on-the-2025-dsf-board-elections/</id><summary type="html">&lt;p&gt;I'd love to say I'm writing this a few days late because I've been thinking carefully
+<feed xmlns="http://www.w3.org/2005/Atom"><title>Tom Carrick - django</title><link href="https://carrick.eu/" rel="alternate"></link><link href="https://carrick.eu/feeds/django.atom.xml" rel="self"></link><id>https://carrick.eu/</id><updated>2024-12-08T00:00:00+01:00</updated><entry><title>django new</title><link href="https://carrick.eu/blog/django-new/" rel="alternate"></link><published>2024-12-08T00:00:00+01:00</published><updated>2024-12-08T00:00:00+01:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2024-12-08:/blog/django-new/</id><summary type="html">&lt;p&gt;Two features, one post. One command, even.&lt;/p&gt;
+&lt;p&gt;One problem that occasionally, but repeatedly, comes up is that Django's
+&lt;tt class="docutils literal"&gt;startproject&lt;/tt&gt; command doesn't really do enough. You will always need to run
+&lt;tt class="docutils literal"&gt;startapp&lt;/tt&gt; as well, and then you need to add the app to the &lt;tt class="docutils literal"&gt;INSTALLED_APPS&lt;/tt&gt;.
+Or, does it actually do too …&lt;/p&gt;</summary><content type="html">&lt;p&gt;Two features, one post. One command, even.&lt;/p&gt;
+&lt;p&gt;One problem that occasionally, but repeatedly, comes up is that Django's
+&lt;tt class="docutils literal"&gt;startproject&lt;/tt&gt; command doesn't really do enough. You will always need to run
+&lt;tt class="docutils literal"&gt;startapp&lt;/tt&gt; as well, and then you need to add the app to the &lt;tt class="docutils literal"&gt;INSTALLED_APPS&lt;/tt&gt;.
+Or, does it actually do too much? Would you be better starting from
+&lt;a class="reference external" href="https://www.mostlypython.com/django-from-first-principles/"&gt;first principles&lt;/a&gt;? Maybe some people would learn better like this.&lt;/p&gt;
+&lt;p&gt;We can solve both of these problems, and one more: &lt;tt class="docutils literal"&gt;startproject&lt;/tt&gt; is such a
+boring name for your first step in Django. We could have a new &lt;tt class="docutils literal"&gt;new&lt;/tt&gt; command
+(that perhaps proxies to &lt;tt class="docutils literal"&gt;startproject&lt;/tt&gt;) that creates a more useful project
+to start from. But which one? Both, obviously. Just ask the user.&lt;/p&gt;
+&lt;div class="highlight"&gt;&lt;pre&gt;&lt;span&gt;&lt;/span&gt;$&lt;span class="w"&gt; &lt;/span&gt;django-admin&lt;span class="w"&gt; &lt;/span&gt;new
+Which&lt;span class="w"&gt; &lt;/span&gt;&lt;span class="nb"&gt;type&lt;/span&gt;&lt;span class="w"&gt; &lt;/span&gt;of&lt;span class="w"&gt; &lt;/span&gt;project&lt;span class="w"&gt; &lt;/span&gt;would&lt;span class="w"&gt; &lt;/span&gt;you&lt;span class="w"&gt; &lt;/span&gt;like&lt;span class="w"&gt; &lt;/span&gt;to&lt;span class="w"&gt; &lt;/span&gt;create?
+&lt;span class="m"&gt;1&lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;Quick&lt;span class="w"&gt; &lt;/span&gt;start&lt;span class="w"&gt; &lt;/span&gt;Django&lt;span class="w"&gt; &lt;/span&gt;project
+&lt;span class="m"&gt;2&lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;Single&lt;span class="w"&gt; &lt;/span&gt;file&lt;span class="w"&gt; &lt;/span&gt;project
+&lt;span class="m"&gt;3&lt;/span&gt;:&lt;span class="w"&gt; &lt;/span&gt;A&lt;span class="w"&gt; &lt;/span&gt;classic&lt;span class="w"&gt; &lt;/span&gt;project
+You&lt;span class="w"&gt; &lt;/span&gt;may&lt;span class="w"&gt; &lt;/span&gt;also&lt;span class="w"&gt; &lt;/span&gt;enter&lt;span class="w"&gt; &lt;/span&gt;a&lt;span class="w"&gt; &lt;/span&gt;path&lt;span class="w"&gt; &lt;/span&gt;or&lt;span class="w"&gt; &lt;/span&gt;URL&lt;span class="w"&gt; &lt;/span&gt;to&lt;span class="w"&gt; &lt;/span&gt;a&lt;span class="w"&gt; &lt;/span&gt;custom&lt;span class="w"&gt; &lt;/span&gt;template
+&lt;span class="m"&gt;1&lt;/span&gt;
+$
+&lt;/pre&gt;&lt;/div&gt;
+&lt;p&gt;Not too bad. If you like this idea, do please comment on the &lt;a class="reference external" href="https://github.com/django/deps/pull/98"&gt;draft DEP&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;I promised too features, though. The second one is simple, and I'm &lt;a class="reference external" href="https://mastodon.social/&amp;#64;webology/113554514353680279"&gt;not the only one&lt;/a&gt;
+to have thought of it. Rename &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;django-admin&lt;/span&gt;&lt;/tt&gt; to &lt;tt class="docutils literal"&gt;django&lt;/tt&gt; and alias &lt;tt class="docutils literal"&gt;&lt;span class="pre"&gt;django-admin&lt;/span&gt;&lt;/tt&gt;
+to it. How do you start a new Django project? Easy, &lt;tt class="docutils literal"&gt;django new&lt;/tt&gt;.&lt;/p&gt;
+</content><category term="misc"></category><category term="django"></category></entry><entry><title>Ramblings on the 2025 DSF Board elections</title><link href="https://carrick.eu/blog/ramblings-on-the-2025-dsf-board-elections/" rel="alternate"></link><published>2024-11-20T00:00:00+01:00</published><updated>2024-11-20T00:00:00+01:00</updated><author><name>Tom Carrick</name></author><id>tag:carrick.eu,2024-11-20:/blog/ramblings-on-the-2025-dsf-board-elections/</id><summary type="html">&lt;p&gt;I'd love to say I'm writing this a few days late because I've been thinking carefully
 about what to say. Sadly not, this will be as off the cuff as ever.&lt;/p&gt;
 &lt;p&gt;It was an interesting election this year. There were four seats up for grabs, and
 three of the four …&lt;/p&gt;</summary><content type="html">&lt;p&gt;I'd love to say I'm writing this a few days late because I've been thinking carefully
