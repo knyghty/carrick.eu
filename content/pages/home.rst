@@ -11,7 +11,8 @@ Tom Carrick
 Hello there 👋🏻
 
 I'm Tom Carrick, professional web developer. I work mostly with Python,
-Django, PostgreSQL, and sometimes FastAPI. I'm currently rekindling my JS skills.
+Django, PostgreSQL, and sometimes FastAPI. I'm currently rekindling my JS skills,
+and avoiding using them by making good use of HTMX and Alpine.js.
 
 The most useful things on this site at the moment are the `blog`_ and my `CV`_.
 
@@ -23,8 +24,9 @@ and I'm also interested in using infrastructure in the most efficient and least
 carbon-intensive way possible.
 
 I'm a semi-regular contributor to Django, and occasionally to other open source
-projects. I sometimes coach for Django Girls workshops (pandemic permitting),
-and I still don't feel like I'm doing enough.
+projects. I run the Django Discord server, serve on the DSF board and Accessibility
+Team, sometimes coach for Django Girls workshops, and I still don't feel like I'm
+doing enough.
 
 .. _blog: /blog/
 .. _CV: /cv/
