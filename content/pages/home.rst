@@ -28,5 +28,9 @@ projects. I run the Django Discord server, serve on the DSF board and Accessibil
 Team, sometimes coach for Django Girls workshops, and I still don't feel like I'm
 doing enough.
 
+I'm currently open to short term contracts, especially if you need your code audited,
+you want to ramp up your team's productivity, or you need to improve your app's
+performance.
+
 .. _blog: /blog/
 .. _CV: /cv/
