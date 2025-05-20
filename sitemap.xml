@@ -6,35 +6,35 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://carrick.eu/about/</loc>
-<lastmod>2025-05-13T17:41:31-00:00</lastmod>
+<lastmod>2025-05-20T07:08:55-00:00</lastmod>
 <changefreq>monthly</changefreq>
 <priority>0.5</priority>
 </url>
 
 <url>
 <loc>https://carrick.eu/archives.html</loc>
-<lastmod>2025-05-13T17:41:31-00:00</lastmod>
+<lastmod>2025-05-20T07:08:55-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
 
 <url>
 <loc>https://carrick.eu/author/tom-carrick.html</loc>
-<lastmod>2025-05-13T17:41:31-00:00</lastmod>
+<lastmod>2025-05-20T07:08:55-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
 
 <url>
 <loc>https://carrick.eu/authors.html</loc>
-<lastmod>2025-05-13T17:41:31-00:00</lastmod>
+<lastmod>2025-05-20T07:08:55-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
 
 <url>
 <loc>https://carrick.eu/blog/</loc>
-<lastmod>2025-05-13T17:41:31-00:00</lastmod>
+<lastmod>2025-05-20T07:08:55-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
@@ -83,42 +83,42 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://carrick.eu/blog/tags/dependencies/</loc>
-<lastmod>2025-05-13T17:41:31-00:00</lastmod>
+<lastmod>2025-05-20T07:08:55-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
 
 <url>
 <loc>https://carrick.eu/blog/tags/django/</loc>
-<lastmod>2025-05-13T17:41:31-00:00</lastmod>
+<lastmod>2025-05-20T07:08:55-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
 
 <url>
 <loc>https://carrick.eu/blog/tags/github-actions/</loc>
-<lastmod>2025-05-13T17:41:31-00:00</lastmod>
+<lastmod>2025-05-20T07:08:55-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
 
 <url>
 <loc>https://carrick.eu/blog/tags/migrations/</loc>
-<lastmod>2025-05-13T17:41:31-00:00</lastmod>
+<lastmod>2025-05-20T07:08:55-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
 
 <url>
 <loc>https://carrick.eu/blog/tags/templates/</loc>
-<lastmod>2025-05-13T17:41:31-00:00</lastmod>
+<lastmod>2025-05-20T07:08:55-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
 
 <url>
 <loc>https://carrick.eu/blog/tags/testing/</loc>
-<lastmod>2025-05-13T17:41:31-00:00</lastmod>
+<lastmod>2025-05-20T07:08:55-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
@@ -146,14 +146,14 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://carrick.eu/categories.html</loc>
-<lastmod>2025-05-13T17:41:31-00:00</lastmod>
+<lastmod>2025-05-20T07:08:55-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
 
 <url>
 <loc>https://carrick.eu/category/misc.html</loc>
-<lastmod>2025-05-13T17:41:31-00:00</lastmod>
+<lastmod>2025-05-20T07:08:55-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
@@ -167,7 +167,7 @@ xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 
 <url>
 <loc>https://carrick.eu/tags.html</loc>
-<lastmod>2025-05-13T17:41:31-00:00</lastmod>
+<lastmod>2025-05-20T07:08:55-00:00</lastmod>
 <changefreq>weekly</changefreq>
 <priority>0.2</priority>
 </url>
