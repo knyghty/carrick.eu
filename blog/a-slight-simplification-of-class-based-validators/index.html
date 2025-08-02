@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+      <meta charset="utf-8">
+    <title>A slight simplification of class based validators | Tom Carrick</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://carrick.eu/theme/images/logo.svg" rel="icon"type="image/svg+xml">
+      <link href="https://carrick.eu/theme/css/main.min.css?dabab4b3" rel="stylesheet">
+    <meta name="author" content="Tom Carrick">
+    <meta name="generator" content="Pelican">
+      <link
+        href="https://carrick.eu/feeds/all.atom.xml"
+        type="application/atom+xml"
+        rel="alternate"
+        title="Tom Carrick Full Atom Feed"
+      >
+    <meta property="og:site_name" content="Tom Carrick">
+    <meta property="og:locale" content="en_GB">
+
+      <meta property="og:image" content="https://carrick.eu/theme/images/logo.png">
+      <meta property="og:image:alt" content="Tom Carrick">
+      <meta property="og:image:width" content="300">
+      <meta property="og:image:height" content="300">
+      <meta name="twitter:image" content="https://carrick.eu/theme/images/logo.png">
+      <meta name="twitter:image:alt" content="Tom Carrick">
+      <meta property="og:type" content="website">
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:creator" content="@knyghty">
+    <meta name="twitter:site" content="@knyghty">
+
+
+      <link href="https://carrick.eu/theme/css/pygments-default.min.css?6a4fb53a" rel="stylesheet">
+
+  <link href="https://carrick.eu/blog/a-slight-simplification-of-class-based-validators/" rel="canonical">
+
+
+  <meta property="og:url" content="https://carrick.eu/blog/a-slight-simplification-of-class-based-validators/">
+
+
+    <meta name="tags" content="django">
+
+  <a class="skip-link" href='#main'>Skip to content</a>
+
+  <header class="site-header" role="banner">
+    <nav>
+      <a href="https://carrick.eu/" class="home-link">
+        <svg
+          viewBox="0 0 90 90"
+          xmlns="http://www.w3.org/2000/svg"
+          fill="#9b59d0"
+          class="logo"
+          role="presentation"
+        >
+          <g class="t">
+            <rect width="74" height="16"></rect>
+            <rect x="31" height="90" width="16"></rect>
+          </g>
+          <g class="c">
+            <rect x="31" height="16" width="55"></rect>
+            <rect x="31" height="90" width="16"></rect>
+            <rect x="31" y="74" height="16" width="55"></rect>
+          </g>
+        </svg>
+        Home
+      </a>
+        <a href="https://carrick.eu/blog/">Blog</a>
+          <a href="https://carrick.eu/cv/">CV</a>
+          <a href="https://carrick.eu/about/">About</a>
+    </nav>
+  </header>
+  <main id="main">
+  <section class="content-area">
+    <header class="content-header">
+      <h1>A slight simplification of class based validators</h1>
+      Published: <time datetime="2025-08-02T00:00:00+02:00">2 August 2025</time>
+      
+    </header>
+
+    <div class="content">
+      <p>Lately I'm trying to find ways to use Django in a more modern way.
+Being able to use type hints for validation, knowing what's going
+to be in <tt class="docutils literal">form.cleaned_data</tt>. That sort of thing. I'm mostly failing.</p>
+<p>The best I've managed lately is to reduce some boilerplate in class
+based validators. I'm not sure if it's really expected to make your own
+class based validators since I couldn't find any good documentation on it.</p>
+<p>However, you can read through the source code to see how it's done there.</p>
+<p>Typically you declare them like this:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="kn">import</span> <span class="n">ValidationError</span>
+<span class="kn">from</span> <span class="nn">django.utils.deconstruct</span> <span class="kn">import</span> <span class="n">deconstructible</span>
+
+
+<span class="nd">@deconstructible</span>
+<span class="k">class</span> <span class="nc">FileSizeValidator</span><span class="p">:</span>
+    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">max_size</span><span class="p">):</span>
+        <span class="bp">self</span><span class="o">.</span><span class="n">max_size</span> <span class="o">=</span> <span class="n">max_size</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">):</span>
+        <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_size</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Max file size is </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_size</span><span class="p">)</span>
+
+    <span class="k">def</span> <span class="fm">__eq__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">other</span><span class="p">):</span>
+        <span class="k">return</span> <span class="nb">isinstance</span><span class="p">(</span><span class="n">other</span><span class="p">,</span> <span class="n">FileSizeValidator</span><span class="p">)</span> <span class="ow">and</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_size</span> <span class="o">==</span> <span class="n">other</span><span class="o">.</span><span class="n">max_size</span>
+</pre></div>
+<p>The reason <tt class="docutils literal">__eq__</tt> is needed is because Django needs to check
+if a validator has changed, so a new migration is needed. Quite
+annoying to need to write this, however. Another small issue is that
+my linter enjoys complaining about implementing <tt class="docutils literal">__eq__</tt> but not
+<tt class="docutils literal">__hash__</tt>.</p>
+<p>Dataclasses can save the day since they have default implementations
+of <tt class="docutils literal">__eq__</tt> and <tt class="docutils literal">__hash__</tt>. So we can at least do this:</p>
+<div class="highlight"><pre><span></span><span class="kn">import</span> <span class="nn">dataclasses</span>
+<span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="kn">import</span> <span class="n">ValidationError</span>
+<span class="kn">from</span> <span class="nn">django.utils.deconstruct</span> <span class="kn">import</span> <span class="n">deconstructible</span>
+
+
+<span class="nd">@deconstructible</span>
+<span class="nd">@dataclasses</span><span class="o">.</span><span class="n">dataclass</span>
+<span class="k">class</span> <span class="nc">FileSizeValidator</span><span class="p">:</span>
+    <span class="n">max_size</span><span class="p">:</span> <span class="nb">int</span>
+
+    <span class="k">def</span> <span class="fm">__call__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">file</span><span class="p">:</span> <span class="s2">&quot;FieldFile&quot;</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+        <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_size</span><span class="p">:</span>
+            <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Max file size is </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">%</span> <span class="bp">self</span><span class="o">.</span><span class="n">max_size</span><span class="p">)</span>
+</pre></div>
+<p>It's a small win.</p>
+<p>There's a small difference. A dataclass's <tt class="docutils literal">__eq__</tt> checks the exact type,
+whereas before we were using <tt class="docutils literal">isinstance</tt>, to allow for subclassing.</p>
+<p>Still, in most cases, I would do this differently. Unless I have a lot of
+different file size requirements, I'd rather just use a <tt class="docutils literal">partial</tt>:</p>
+<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">functools</span> <span class="kn">import</span> <span class="n">partial</span>
+<span class="kn">from</span> <span class="nn">django.core.exceptions</span> <span class="kn">import</span> <span class="n">ValidationError</span>
+
+
+<span class="k">def</span> <span class="nf">validate_file_size</span><span class="p">(</span><span class="n">file</span><span class="p">:</span> <span class="s2">&quot;FieldFile&quot;</span><span class="p">,</span> <span class="n">max_size</span><span class="p">:</span> <span class="nb">int</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+    <span class="k">if</span> <span class="n">file</span><span class="o">.</span><span class="n">size</span> <span class="o">&gt;</span> <span class="n">max_size</span><span class="p">:</span>
+        <span class="k">raise</span> <span class="n">ValidationError</span><span class="p">(</span><span class="n">_</span><span class="p">(</span><span class="s2">&quot;Max file size is </span><span class="si">%s</span><span class="s2">&quot;</span><span class="p">)</span> <span class="o">%</span> <span class="n">max_size</span><span class="p">)</span>
+
+
+<span class="n">validate_small_file</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">validate_file_size</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="mi">524_288</span><span class="p">)</span>
+<span class="n">validate_medium_file</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">validate_file_size</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="mi">1_048_576</span><span class="p">)</span>
+<span class="n">validate_large_file</span> <span class="o">=</span> <span class="n">partial</span><span class="p">(</span><span class="n">validate_file_size</span><span class="p">,</span> <span class="n">max_size</span><span class="o">=</span><span class="mi">10_485_760</span><span class="p">)</span>
+</pre></div>
+<p>Shorter, and if you ask me, easier to read.</p>
+
+    </div>
+
+    <footer class="content-footer">
+        <div class="tags">
+          Tags:
+            <a href="https://carrick.eu/blog/tags/django/">django</a>
+        </div>
+    </footer>
+  </section>
+  </main>
+  <footer class="site-footer">
+    © Tom Carrick
+    <ul class="inline unstyled">
+      <li><a href="https://github.com/knyghty">GitHub</a></li>
+      <li><a href="https://twitter.com/knyghty">Twitter</a></li>
+    </ul>
+  </footer>
+  <script src="https://carrick.eu/theme/js/print.js"></script>
+</html>
