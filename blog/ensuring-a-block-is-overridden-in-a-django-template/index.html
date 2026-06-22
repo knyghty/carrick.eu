@@ -112,17 +112,17 @@ must be overridden in extending templates.</p>
 <p>This will render the title as &quot; - kulupu mi&quot; on the home page. Oopsie.</p>
 <p>Okay, let's actually fix this. All we need to do is add a template tag that
 raises an exception, and stick it in the right place in the base template.</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django</span> <span class="kn">import</span> <span class="n">template</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django</span><span class="w"> </span><span class="kn">import</span> <span class="n">template</span>
 
 <span class="n">register</span> <span class="o">=</span> <span class="n">template</span><span class="o">.</span><span class="n">Library</span><span class="p">()</span>
 
 
-<span class="k">class</span> <span class="nc">BlockNotOverriddenError</span><span class="p">(</span><span class="ne">NotImplementedError</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">BlockNotOverriddenError</span><span class="p">(</span><span class="ne">NotImplementedError</span><span class="p">):</span>
     <span class="k">pass</span>
 
 
 <span class="nd">@register</span><span class="o">.</span><span class="n">simple_tag</span>
-<span class="k">def</span> <span class="nf">ensure_overridden</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">ensure_overridden</span><span class="p">():</span>
     <span class="k">raise</span> <span class="n">BlockNotOverriddenError</span>
 </pre></div>
 <p>I choose to create a new exception class, <cite>BlockNotOverriddenError</cite>, to make

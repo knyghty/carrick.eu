@@ -124,19 +124,19 @@ more robust than the simple approach below.
 However, if you're averse to installing yet another package, let's see what
 we can put together without too much work.</p>
 <p>Let's use the example above and say we have the following data migration:</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">migrations</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">migrations</span>
 
-<span class="k">def</span> <span class="nf">populate_usernames</span><span class="p">(</span><span class="n">apps</span><span class="p">,</span> <span class="n">schema_editor</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">populate_usernames</span><span class="p">(</span><span class="n">apps</span><span class="p">,</span> <span class="n">schema_editor</span><span class="p">):</span>
     <span class="n">User</span> <span class="o">=</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s2">&quot;accounts&quot;</span><span class="p">,</span> <span class="s2">&quot;User&quot;</span><span class="p">)</span>
     <span class="k">for</span> <span class="n">user</span> <span class="ow">in</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">all</span><span class="p">():</span>
         <span class="n">user</span><span class="o">.</span><span class="n">username</span> <span class="o">=</span> <span class="n">user</span><span class="o">.</span><span class="n">email</span><span class="o">.</span><span class="n">rpartition</span><span class="p">(</span><span class="s2">&quot;@&quot;</span><span class="p">)[</span><span class="mi">0</span><span class="p">]</span>
         <span class="n">user</span><span class="o">.</span><span class="n">save</span><span class="p">()</span>
 
-<span class="k">def</span> <span class="nf">depopulate_usernames</span><span class="p">(</span><span class="n">apps</span><span class="p">,</span> <span class="n">schema_editor</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">depopulate_usernames</span><span class="p">(</span><span class="n">apps</span><span class="p">,</span> <span class="n">schema_editor</span><span class="p">):</span>
     <span class="n">User</span> <span class="o">=</span> <span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s2">&quot;accounts&quot;</span><span class="p">,</span> <span class="s2">&quot;User&quot;</span><span class="p">)</span>
     <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">update</span><span class="p">(</span><span class="n">username</span><span class="o">=</span><span class="kc">None</span><span class="p">)</span>
 
-<span class="k">class</span> <span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="o">.</span><span class="n">Migration</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Migration</span><span class="p">(</span><span class="n">migrations</span><span class="o">.</span><span class="n">Migration</span><span class="p">):</span>
     <span class="n">dependencies</span> <span class="o">=</span> <span class="p">[(</span><span class="s2">&quot;accounts&quot;</span><span class="p">,</span> <span class="s2">&quot;0002_add_username&quot;</span><span class="p">)]</span>
     <span class="n">operations</span> <span class="o">=</span> <span class="p">[</span><span class="n">migrations</span><span class="o">.</span><span class="n">RunPython</span><span class="p">(</span><span class="n">populate_usernames</span><span class="p">,</span> <span class="n">depopulate_usernames</span><span class="p">)]</span>
 </pre></div>
@@ -144,15 +144,15 @@ we can put together without too much work.</p>
 run the migrations. You may notice that this is a class with a single
 method and <tt class="docutils literal">__init__</tt>, so it could just be a function, but setting
 the <tt class="docutils literal">apps</tt> attribute felt better than returning <tt class="docutils literal">apps</tt> directly.</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">connection</span>
-<span class="kn">from</span> <span class="nn">django.db.migrations.executor</span> <span class="kn">import</span> <span class="n">MigrationExecutor</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">connection</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.db.migrations.executor</span><span class="w"> </span><span class="kn">import</span> <span class="n">MigrationExecutor</span>
 
 
-<span class="k">class</span> <span class="nc">Migrator</span><span class="p">:</span>
-    <span class="k">def</span> <span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Migrator</span><span class="p">:</span>
+    <span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">connection</span><span class="o">=</span><span class="n">connection</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">executor</span> <span class="o">=</span> <span class="n">MigrationExecutor</span><span class="p">(</span><span class="n">connection</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">migrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">migration</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">migrate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">app_label</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">migration</span><span class="p">:</span> <span class="nb">str</span><span class="p">):</span>
         <span class="n">target</span> <span class="o">=</span> <span class="p">[(</span><span class="n">app_label</span><span class="p">,</span> <span class="n">migration</span><span class="p">)]</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">loader</span><span class="o">.</span><span class="n">build_graph</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">executor</span><span class="o">.</span><span class="n">migrate</span><span class="p">(</span><span class="n">target</span><span class="p">)</span>
@@ -167,12 +167,12 @@ version of the models, similar to how it's used in the data migration itself.</p
 <p>Using the migrator in pytest is pretty simple.
 We can write a single-line fixture:</p>
 <div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">fixture</span>
-<span class="k">def</span> <span class="nf">migrator</span><span class="p">():</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">migrator</span><span class="p">():</span>
     <span class="k">return</span> <span class="n">Migrator</span>
 </pre></div>
 <p>Then we can write our tests, migrating to where we need to be:</p>
 <div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">django_db</span>
-<span class="k">def</span> <span class="nf">test_populate_emails</span><span class="p">(</span><span class="n">migrator</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_populate_emails</span><span class="p">(</span><span class="n">migrator</span><span class="p">):</span>
     <span class="n">migrator</span> <span class="o">=</span> <span class="n">migrator</span><span class="p">()</span>
     <span class="n">migrator</span><span class="o">.</span><span class="n">migrate</span><span class="p">(</span><span class="s2">&quot;accounts&quot;</span><span class="p">,</span> <span class="s2">&quot;0002_add_username&quot;</span><span class="p">)</span>
     <span class="n">User</span> <span class="o">=</span> <span class="n">migrator</span><span class="o">.</span><span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s2">&quot;accounts&quot;</span><span class="p">,</span> <span class="s2">&quot;User&quot;</span><span class="p">)</span>
@@ -186,7 +186,7 @@ We can write a single-line fixture:</p>
 is only used when developing, but in case you want that 100% coverage or
 really want to be sure:</p>
 <div class="highlight"><pre><span></span><span class="nd">@pytest</span><span class="o">.</span><span class="n">mark</span><span class="o">.</span><span class="n">django_db</span>
-<span class="k">def</span> <span class="nf">test_depopulate_emails</span><span class="p">(</span><span class="n">migrator</span><span class="p">):</span>
+<span class="k">def</span><span class="w"> </span><span class="nf">test_depopulate_emails</span><span class="p">(</span><span class="n">migrator</span><span class="p">):</span>
     <span class="n">migrator</span> <span class="o">=</span> <span class="n">migrator</span><span class="p">()</span>
     <span class="n">migrator</span><span class="o">.</span><span class="n">migrate</span><span class="p">(</span><span class="s2">&quot;accounts&quot;</span><span class="p">,</span> <span class="s2">&quot;0002_add_username&quot;</span><span class="p">)</span>
     <span class="n">User</span> <span class="o">=</span> <span class="n">migrator</span><span class="o">.</span><span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s2">&quot;accounts&quot;</span><span class="p">,</span> <span class="s2">&quot;User&quot;</span><span class="p">)</span>
@@ -200,15 +200,15 @@ really want to be sure:</p>
 <h3>unittest</h3>
 <p>If you're using Django's default unittest framework,
 you can use it in much the same way:</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.test</span> <span class="kn">import</span> <span class="n">TestCase</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.test</span><span class="w"> </span><span class="kn">import</span> <span class="n">TestCase</span>
 
 
-<span class="k">class</span> <span class="nc">MigrationTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
-    <span class="k">def</span> <span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">MigrationTest</span><span class="p">(</span><span class="n">TestCase</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">setUp</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">migrator</span> <span class="o">=</span> <span class="n">Migrator</span><span class="p">()</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">migrator</span><span class="o">.</span><span class="n">migrate</span><span class="p">(</span><span class="s2">&quot;accounts&quot;</span><span class="p">,</span> <span class="s2">&quot;0002_add_username&quot;</span><span class="p">)</span>
 
-    <span class="k">def</span> <span class="nf">test_populate_usernames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_populate_usernames</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="n">User</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">migrator</span><span class="o">.</span><span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s2">&quot;accounts&quot;</span><span class="p">,</span> <span class="s2">&quot;User&quot;</span><span class="p">)</span>
         <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;test123@example.com&quot;</span><span class="p">)</span>
         <span class="k">assert</span> <span class="n">user</span><span class="o">.</span><span class="n">username</span> <span class="ow">is</span> <span class="kc">None</span>
@@ -218,7 +218,7 @@ you can use it in much the same way:</p>
             <span class="n">email</span><span class="o">=</span><span class="s2">&quot;test123@example.com&quot;</span><span class="p">,</span> <span class="n">username</span><span class="o">=</span><span class="s2">&quot;test123&quot;</span>
         <span class="p">)</span><span class="o">.</span><span class="n">exists</span><span class="p">()</span>
 
-    <span class="k">def</span> <span class="nf">test_depopulate_emails</span><span class="p">(</span><span class="n">migrator</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">test_depopulate_emails</span><span class="p">(</span><span class="n">migrator</span><span class="p">):</span>
         <span class="n">User</span> <span class="o">=</span> <span class="n">migrator</span><span class="o">.</span><span class="n">apps</span><span class="o">.</span><span class="n">get_model</span><span class="p">(</span><span class="s2">&quot;accounts&quot;</span><span class="p">,</span> <span class="s2">&quot;User&quot;</span><span class="p">)</span>
         <span class="n">user</span> <span class="o">=</span> <span class="n">User</span><span class="o">.</span><span class="n">objects</span><span class="o">.</span><span class="n">create_user</span><span class="p">(</span><span class="n">email</span><span class="o">=</span><span class="s2">&quot;test123@example.com&quot;</span><span class="p">)</span>
         <span class="n">migrator</span><span class="o">.</span><span class="n">migrate</span><span class="p">(</span><span class="s2">&quot;accounts&quot;</span><span class="p">,</span> <span class="s2">&quot;0003_populate_usernames&quot;</span><span class="p">)</span>

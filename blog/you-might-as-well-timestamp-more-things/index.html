@@ -81,11 +81,11 @@ It suggests using timestamps rather than booleans just to have the extra data
 point of when something happened.</p>
 <p>Lately I found myself in a different, but related situation. I had something
 like the following model:</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span>
 
 
-<span class="k">class</span> <span class="nc">Order</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="k">class</span> <span class="nc">Status</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Order</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">Status</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
         <span class="n">PLACED</span> <span class="o">=</span> <span class="s2">&quot;placed&quot;</span><span class="p">,</span> <span class="s2">&quot;placed&quot;</span>
         <span class="n">SHIPPED</span> <span class="o">=</span> <span class="s2">&quot;shipped&quot;</span><span class="p">,</span> <span class="s2">&quot;shipped&quot;</span>
 
@@ -112,11 +112,11 @@ that you still have to make sure that you always change the status correctly
 when you change the dates, or you will hit a server error (or a validation
 error in the admin). We can do better, by only storing the timestamps and
 deriving the status from them, e.g.:</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span>
 
 
-<span class="k">class</span> <span class="nc">Order</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="k">class</span> <span class="nc">Status</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Order</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">Status</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
         <span class="n">PLACED</span> <span class="o">=</span> <span class="s2">&quot;placed&quot;</span><span class="p">,</span> <span class="s2">&quot;placed&quot;</span>
         <span class="n">SHIPPED</span> <span class="o">=</span> <span class="s2">&quot;shipped&quot;</span><span class="p">,</span> <span class="s2">&quot;shipped&quot;</span>
 
@@ -125,7 +125,7 @@ deriving the status from them, e.g.:</p>
     <span class="n">date_shipped</span> <span class="o">=</span> <span class="n">models</span><span class="o">.</span><span class="n">DateTimeField</span><span class="p">(</span><span class="n">null</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">blank</span><span class="o">=</span><span class="kc">True</span><span class="p">)</span>
 
     <span class="nd">@property</span>
-    <span class="k">def</span> <span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+    <span class="k">def</span><span class="w"> </span><span class="nf">status</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="k">if</span> <span class="bp">self</span><span class="o">.</span><span class="n">date_shipped</span><span class="p">:</span>
             <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">SHIPPED</span>
         <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">Status</span><span class="o">.</span><span class="n">PLACED</span>
@@ -137,12 +137,12 @@ end up with some slow queries.</p>
 <p>Luckily the Django 5.0 release was near when I was thinking about this
 problem, and the new <a class="reference external" href="https://docs.djangoproject.com/en/dev/ref/models/fields/#generatedfield">GeneratedField</a> turned out to be just what I needed.
 With it, we can move this logic into the database:</p>
-<div class="highlight"><pre><span></span><span class="kn">from</span> <span class="nn">django.db</span> <span class="kn">import</span> <span class="n">models</span>
-<span class="kn">from</span> <span class="nn">django.db.models</span> <span class="kn">import</span> <span class="n">Case</span><span class="p">,</span> <span class="n">When</span><span class="p">,</span> <span class="n">Value</span>
+<div class="highlight"><pre><span></span><span class="kn">from</span><span class="w"> </span><span class="nn">django.db</span><span class="w"> </span><span class="kn">import</span> <span class="n">models</span>
+<span class="kn">from</span><span class="w"> </span><span class="nn">django.db.models</span><span class="w"> </span><span class="kn">import</span> <span class="n">Case</span><span class="p">,</span> <span class="n">When</span><span class="p">,</span> <span class="n">Value</span>
 
 
-<span class="k">class</span> <span class="nc">Order</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
-    <span class="k">class</span> <span class="nc">Status</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
+<span class="k">class</span><span class="w"> </span><span class="nc">Order</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">Model</span><span class="p">):</span>
+    <span class="k">class</span><span class="w"> </span><span class="nc">Status</span><span class="p">(</span><span class="n">models</span><span class="o">.</span><span class="n">TextChoices</span><span class="p">):</span>
         <span class="n">PLACED</span> <span class="o">=</span> <span class="s2">&quot;placed&quot;</span><span class="p">,</span> <span class="s2">&quot;placed&quot;</span>
         <span class="n">SHIPPED</span> <span class="o">=</span> <span class="s2">&quot;shipped&quot;</span><span class="p">,</span> <span class="s2">&quot;shipped&quot;</span>
 
